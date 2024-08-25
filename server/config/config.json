@@ -1,0 +1,7 @@
+{
+  "username": "root",
+  "password": "otwfullstack",
+  "database": "kolapotrip",
+  "host": "localhost",
+  "dialect": "mysql"
+}
