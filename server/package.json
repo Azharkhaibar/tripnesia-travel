@@ -5,14 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "start": "nodemon index.js"
   },
   "author": "Azhar Khaibar",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "axios": "^1.7.5",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mysql2": "^3.11.0",
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "sequelize": "^6.37.3"
   }
 }

@@ -1,13 +1,16 @@
-const sequelize = require('sequelize')
-const { get } = require('../routes/router')
-const db = require('../config/config.json')
-const dbConnect = new sequelize(
-    db.database,
-    db.username,
-    db.password,
-    db.host,
-    db.dialect
-)
+const Sequelize  = require("sequelize"); // Correct import with capital 'S'
+const dbConfig = require("../config/config.json"); // Correct import for the config file
 
-dbConnect.sync({})
-module.exports = dbConnect
+const dbConnect = new Sequelize(
+  dbConfig.database, // Database name
+  dbConfig.username, // Database username
+  dbConfig.password, // Database password
+  {
+    dialect: dbConfig.dialect
+  }
+);
+
+// Sync all models with the database
+dbConnect.sync({});
+
+module.exports = dbConnect;
