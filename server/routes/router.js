@@ -4,6 +4,7 @@ const router = express.Router()
 const authController = require('../controllers/authcontroller')
 const tripController = require('../controllers/tripcontroller')
 const bookingController = require('../controllers/bookingcontroller')
+const axiosController = require('../controllers/axioscontroller')
 router.get('/', (req, res) => {
     res.json({
         message: 'STATUS CONNECTED'
@@ -22,5 +23,7 @@ router.get('/trip/:id', tripController.getDataTripsById)
 router.post('/booking', bookingController.postBooking)
 router.get('/booking', bookingController.getBookingData)
 router.get('/booking/:id', bookingController.getBookingDataById)
+
+router.get('/axios/fetch', axiosController.fetchingData)
 
 module.exports = router

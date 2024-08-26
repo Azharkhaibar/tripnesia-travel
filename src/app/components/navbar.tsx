@@ -18,7 +18,7 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <Box w="90%" h="7vh" left="85" bg="white" mt={48} alignItems="center" pos="absolute" p="10px" borderRadius="40px">
+    <Box w="90%" h="7vh" left="85" bg="white" mt={48} alignItems="center" pos="absolute" p="10px" borderRadius="15px">
       <Box display="flex" alignItems="center" px="20px">
         <Box>
           <Heading fontSize="24" fontWeight="bold">

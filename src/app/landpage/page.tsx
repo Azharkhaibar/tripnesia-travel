@@ -1,11 +1,25 @@
-import React from 'react'
+"use client"
+import React, { useState, useEffect } from 'react'
 import { Navbar } from '../components/navbar'
-import { Box, Container, Text, Heading } from '@chakra-ui/react'
+import { Box, Container, Text, Heading, Image } from '@chakra-ui/react'
 import { url } from 'inspector'
 import NextLink from "next/link";
+import { dataDestinations } from '../data/metadata1'
+import axios from 'axios';
 const Landpage = () => {
+  const [ popularDestinations, setPopularDestinations ] = useState([])
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/axios/fetch")
+      .then((response) => {
+        setPopularDestinations(response.data.data);
+      })
+      .catch((error) => {
+        console.error("terjadi error saat fetching data", error);
+      });
+  }, [])
   return (
-    <Box w="100%" h="250vh">
+    <Box maxW="100%" h="250vh">
       <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')" h="100vh" bgSize="cover" bgRepeat="no-repeat">
         <Navbar />
         <Box textAlign="center" pt="15%">
@@ -23,7 +37,7 @@ const Landpage = () => {
           </Heading>
         </Box>
       </Box>
-      <Box w="100%" h="55vh" display="flex">
+      <Box w="100%" h="48vh" display="flex">
         <Box w="50%" h="100%" px="6%">
           <Box pt="3%" mb="0">
             <Heading fontSize="75px" display="flex" alignItems="center" mb="0">
@@ -61,11 +75,28 @@ const Landpage = () => {
           </Box>
         </Box>
       </Box>
-      <Box w="100%" h="100vh" bg="pink" px="5.8%">
-        <Heading mb="0" fontSize="35px">
-          Popular Destination
-          <Text mt="15" fontSize="18px" fontWeight="400" opacity="">Let's enjoy this heaven on earth</Text>
-        </Heading>
+      <Box w="100%" h="100vh" bg="pink">
+        <Box>
+          <Heading mb="0" fontSize="35px">
+            Popular Destination
+            <Text mt="15" fontSize="18px" fontWeight="400" opacity="">
+              Let's enjoy this heaven on earth
+            </Text>
+          </Heading>
+          <Box display="flex"  gap="1px" alignItems="center" justifyContent="center">
+            {dataDestinations.map((destination, index) => (
+              <Box key={index} maxW="340px" maxH="400px" m="auto">
+                <Image src={destination.img} alt="foto-dummy" w="100%" />
+                <Box textAlign="left">
+                  <Heading>
+                    {destination.destinasi}
+                    <Text>{destination.deskripsi}</Text>
+                  </Heading>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
