@@ -1,13 +1,30 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import { Navbar } from '../components/navbar'
-import { Box, Container, Text, Heading, Image } from '@chakra-ui/react'
-import { url } from 'inspector'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { Box, Container, Text, Heading, Image, Flex, Button } from '@chakra-ui/react'
 import NextLink from "next/link";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { dataDestinations } from '../data/metadata1'
+import '../design/reactslider.css'
 import axios from 'axios';
 const Landpage = () => {
-  const [ popularDestinations, setPopularDestinations ] = useState([])
+  const [popularDestinations, setPopularDestinations] = useState([])
+     const settings = {
+       dots: true,
+       infinite: true,
+       centerMode: false,
+       slidesToShow: 4,
+       slidesToScroll: 1,
+       autoplay: true,
+       autoplaySpeed: 2500,
+       pauseOnHover: true,
+       arrows: true,
+       nextArrow: <ChevronRightIcon w={8} h={8} color="gray.500" />,
+       prevArrow: <ChevronLeftIcon w={8} h={8} color="gray.500" />,
+     };
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/axios/fetch")
@@ -75,26 +92,60 @@ const Landpage = () => {
           </Box>
         </Box>
       </Box>
-      <Box w="100%" h="100vh" bg="pink">
-        <Box>
-          <Heading mb="0" fontSize="35px">
-            Popular Destination
-            <Text mt="15" fontSize="18px" fontWeight="400" opacity="">
-              Let's enjoy this heaven on earth
+      <Box w="100%" h="100vh">
+        <Box w="90%" m="auto">
+          <Box display="flex" justifyContent="space-between" px="13px" alignItems="center">
+            <Box display="flex" flexDirection="column" w="400px">
+              <Heading mb="0" fontSize="35px" pl="1%">
+                Popular Destination
+                <Text mt="15" fontSize="18px" fontWeight="400" opacity="">
+                  Let's enjoy this heaven on earth
+                </Text>
+              </Heading>
+            </Box>
+            <Text p="15px" fontSize="17px" fontWeight="400" mb="0" bg="grey">
+              See all
             </Text>
-          </Heading>
-          <Box display="flex"  gap="1px" alignItems="center" justifyContent="center">
-            {dataDestinations.map((destination, index) => (
-              <Box key={index} maxW="340px" maxH="400px" m="auto">
-                <Image src={destination.img} alt="foto-dummy" w="100%" />
-                <Box textAlign="left">
-                  <Heading>
-                    {destination.destinasi}
-                    <Text>{destination.deskripsi}</Text>
-                  </Heading>
+          </Box>
+          <Box width="100%" maxW="1460px" mx="auto" mt="1%">
+            <Slider {...settings}>
+              {dataDestinations.map((destination, index) => (
+                <Box key={index}>
+                  <Box
+                    maxW="400px"
+                    maxH="500px"
+                    borderRadius="md"
+                    boxShadow="md"
+                    overflow="hidden"
+                    display="flex"
+                    flexDirection="column"
+                    justifyContent="center"
+                    textAlign="left"
+                    mt="0"
+                    m="auto"
+                  >
+                    <Image src={destination.img} alt="foto-dummy" w="100%" h="auto" />
+                    <Box p="4">
+                      <Heading size="md">{destination.destinasi}</Heading>
+                      <Text fontWeight="400" fontSize="18px" mt="2">
+                        {destination.deskripsi}
+                      </Text>
+                      <Flex justifyContent="space-between" alignItems="center" mt="4">
+                        <Text fontSize="14px" fontWeight="400">
+                          {destination.lokasi}
+                        </Text>
+                        <Text fontSize="18px">
+                          {destination.price} /{" "}
+                          <Text as="span" fontSize="13px">
+                            Person
+                          </Text>
+                        </Text>
+                      </Flex>
+                    </Box>
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              ))}
+            </Slider>
           </Box>
         </Box>
       </Box>

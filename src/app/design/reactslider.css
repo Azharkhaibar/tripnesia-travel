@@ -1,0 +1,9 @@
+/* Add this CSS to your stylesheet or in a <style> tag in your component */
+.slick-slide {
+  padding: 0 10px; /* Adjust the padding to control the space between slides */
+}
+
+.slick-track {
+  display: flex;
+  align-items: center;
+}
