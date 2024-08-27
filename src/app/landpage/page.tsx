@@ -4,27 +4,44 @@ import { Navbar } from '../components/navbar'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { Box, Container, Text, Heading, Image, Flex, Button } from '@chakra-ui/react'
+import { Box, Container, Text, Heading, Image, Flex, Button, Card } from '@chakra-ui/react'
 import NextLink from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { dataDestinations } from '../data/metadata1'
+import { guider } from '../data/dataguider';
 import '../design/reactslider.css'
 import axios from 'axios';
 const Landpage = () => {
   const [popularDestinations, setPopularDestinations] = useState([])
-     const settings = {
-       dots: true,
-       infinite: true,
-       centerMode: false,
-       slidesToShow: 4,
-       slidesToScroll: 1,
-       autoplay: true,
-       autoplaySpeed: 2500,
-       pauseOnHover: true,
-       arrows: true,
-       nextArrow: <ChevronRightIcon w={8} h={8} color="gray.500" />,
-       prevArrow: <ChevronLeftIcon w={8} h={8} color="gray.500" />,
-     };
+  const settings = {
+    dots: true,
+    infinite: true,
+    centerMode: false,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 3500,
+    autoplaySpeed: 2500,
+    pauseOnHover: true,
+    arrows: true,
+    cssEase: "ease-in-out",
+    nextArrow: <ChevronRightIcon w={8} h={8} color="gray.500" />,
+    prevArrow: <ChevronLeftIcon w={8} h={8} color="gray.500" />,
+  };
+
+  const SliderGuider = {
+    dots: true,
+    infinite: true,
+    centerMode: false,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    pauseOnHover: true,
+    arrows: true,
+    nextArrow: <ChevronRightIcon w={8} h={8} color="gray.500" />,
+    prevArrow: <ChevronLeftIcon w={8} h={8} color="gray.500" />,
+  };
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/axios/fetch")
@@ -111,19 +128,7 @@ const Landpage = () => {
             <Slider {...settings}>
               {dataDestinations.map((destination, index) => (
                 <Box key={index}>
-                  <Box
-                    maxW="400px"
-                    maxH="500px"
-                    borderRadius="md"
-                    boxShadow="md"
-                    overflow="hidden"
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent="center"
-                    textAlign="left"
-                    mt="0"
-                    m="auto"
-                  >
+                  <Box maxW="400px" maxH="500px" borderRadius="md" boxShadow="md" overflow="hidden" display="flex" flexDirection="column" justifyContent="center" textAlign="left" mt="0" m="auto">
                     <Image src={destination.img} alt="foto-dummy" w="100%" h="auto" />
                     <Box p="4">
                       <Heading size="md">{destination.destinasi}</Heading>
@@ -146,6 +151,51 @@ const Landpage = () => {
                 </Box>
               ))}
             </Slider>
+          </Box>
+          <Box w="100%" h="100vh" pt="10%">
+            <Box textAlign="center">
+              <Text mb="0">
+                Meet With Guide
+                <Heading mt="0" fontSize="38px">
+                  Tour Guide
+                </Heading>
+              </Text>
+            </Box>
+            <Box w="100%" h="100%" zIndex="1">
+              <Slider {...SliderGuider}>
+                {guider.map((guiderPerson, index) => (
+                  <Box key={index} pos="relative" textAlign="center" pb="50px" zIndex="10">
+                    <Image
+                      src={guiderPerson.pictPerson}
+                      w="150px"
+                      h="150px"
+                      borderRadius="50%"
+                      objectFit="cover"
+                      position="absolute"
+                      top="0"
+                      left="50%"
+                      transform="translate(-50%, -30%)"
+                      border="3px solid grey"
+                      boxShadow="0 0 10px rgba(0, 0, 0, 0.1)"
+                      zIndex="100"
+                      alt="gambar-dummy"
+                    />
+                    <Card maxW="400px" h="300px" bg="white" pt="100px" zIndex="0" borderRadius="20px" boxShadow="lg" p="15px">
+                      <Box p="40px" bg="pink" borderRadius="20px" mt="41%">
+                        <Box textAlign="center" h="100%">
+                          <Heading mb="0" size="md">
+                            {guiderPerson.name}
+                          </Heading>
+                          <Text fontSize="18px" fontWeight="400" mt="0">
+                            {guiderPerson.job}
+                          </Text>
+                        </Box>
+                      </Box>
+                    </Card>
+                  </Box>
+                ))}
+              </Slider>
+            </Box>
           </Box>
         </Box>
       </Box>
