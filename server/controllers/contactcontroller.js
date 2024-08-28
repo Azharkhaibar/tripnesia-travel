@@ -2,8 +2,6 @@ const ContactModels = require('../models/contact')
 const postContact = async (req, res) => {
   try {
     const { firstname, email, typedestination, message } = req.body;
-
-    // Log the received data to verify it's being sent correctly
     console.log("Received data:", { firstname, email, typedestination, message });
 
     const postResponse = await ContactModels.create({
@@ -13,13 +11,9 @@ const postContact = async (req, res) => {
       message,
     });
 
-    // Return success response
     res.json(postResponse);
   } catch (error) {
-    // Log the complete error for debugging
     console.error("Error in postContact:", error);
-
-    // Return a more detailed error response
     res.status(400).json({
       message: "Failed to post contact",
       error: error.message,

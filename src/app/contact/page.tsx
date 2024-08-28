@@ -53,7 +53,11 @@ const Contact = () => {
 
   return (
     <Box>
-      <Banner />
+      <Banner
+        bgImage="/image/banner/banner2.jpg"
+        title="Contact us"
+        breadcrumbs={["Home", "Contact us"]}
+      />
       <Box w="100%" h="50vh" pt="5%">
         <Text textAlign="center" fontSize="2xl" fontWeight="400" mb={2}>
           Get In Touch

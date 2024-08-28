@@ -1,11 +1,7 @@
 const BookingModels = require("../models/bookingmodels");
-
-// Menambahkan pemesanan
 const postBooking = async (req, res) => {
     try {
         const { id_booking, booking_date, status, payment_status, total_price } = req.body;
-
-        // Membuat entri baru di tabel Bookings
         const newBooking = await BookingModels.create({
             id_booking,
             booking_date,
@@ -21,7 +17,6 @@ const postBooking = async (req, res) => {
     }
 };
 
-// Mendapatkan semua data pemesanan
 const getBookingData = async (req, res) => {
     try {
         const bookings = await BookingModels.findAll({});
@@ -32,7 +27,6 @@ const getBookingData = async (req, res) => {
     }
 };
 
-// Mendapatkan data pemesanan berdasarkan ID
 const getBookingDataById = async (req, res) => {
     try {
         const id = req.params.id;
