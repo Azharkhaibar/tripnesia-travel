@@ -26,6 +26,8 @@ router.get('/booking', bookingController.getBookingData)
 router.get('/booking/:id', bookingController.getBookingDataById)
 
 router.get('/axios/fetch', axiosController.fetchingData)
+// post contact
+router.post('/axios/post', axiosController.postContact)
 
 router.post('/contact', ContactController.postContact)
 router.get('/contact', ContactController.getContact)
