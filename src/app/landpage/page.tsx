@@ -20,7 +20,6 @@ const Landpage = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    speed: 3500,
     autoplaySpeed: 2500,
     pauseOnHover: true,
     arrows: true,
@@ -36,6 +35,7 @@ const Landpage = () => {
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
+    speed: 1500,
     autoplaySpeed: 4000,
     pauseOnHover: true,
     arrows: true,
@@ -54,7 +54,7 @@ const Landpage = () => {
   }, [])
   return (
     <Box maxW="100%" h="250vh">
-      <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')" h="100vh" bgSize="cover" bgRepeat="no-repeat">
+      <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')" h="80vh" bgSize="cover" bgRepeat="no-repeat">
         <Navbar />
         <Box textAlign="center" pt="15%">
           <Heading fontSize="65px" color="white">
@@ -71,17 +71,17 @@ const Landpage = () => {
           </Heading>
         </Box>
       </Box>
-      <Box w="100%" h="48vh" display="flex">
+      <Box w="100%" h="50vh" display="flex">
         <Box w="50%" h="100%" px="6%">
           <Box pt="3%" mb="0">
-            <Heading fontSize="75px" display="flex" alignItems="center" mb="0">
+            <Heading fontSize="75px" display="flex" alignItems="center" pt={20}>
               Indonesia
               <Text fontSize="25px" ml="10px" mt="38">
                 Asia
               </Text>
             </Heading>
           </Box>
-          <Text mb="20px" mt="28" fontSize="20px">
+          <Text mb="20px" mt="0" fontSize="20px">
             This beguiling nation of over 17,000 islands is home to a huge diversity of adventures to choose from – Indonesia's sheer range of experiences is hard to beat.
           </Text>
           <Box display="flex" gap="20px">
@@ -94,10 +94,10 @@ const Landpage = () => {
           </Box>
         </Box>
         <Box w="50%" h="100%">
-          <Box m="auto" mt="13%" bg="#D1E9F6" h="auto" p="20px" textAlign="center" w="450px">
+          <Box m="auto" mt="17%" bg="#D1E9F6" h="auto " p="20px" textAlign="center" w="450px">
             <Heading fontSize="28px">
               Plan your trip with Guide, an AI travel planner!
-              <Text fontSize="16px" fontWeight="400">
+              <Text fontSize="16px" fontWeight="400" mt={4}>
                 Create a personalized trip itinerary in seconds using artificial intelligence.
               </Text>
               <NextLink href="/destinasi">
@@ -120,16 +120,16 @@ const Landpage = () => {
                 </Text>
               </Heading>
             </Box>
-            <Text p="15px" fontSize="17px" fontWeight="400" mb="0" bg="grey">
+            <Text p="12px" fontSize="17px" borderRadius="10px" fontWeight="400" mb="0" bg="grey">
               See all
             </Text>
           </Box>
-          <Box width="100%" maxW="1460px" mx="auto" mt="1%">
+          <Box width="100%" maxW="1480px" mx="auto" mt="3%" h="500px">
             <Slider {...settings}>
               {dataDestinations.map((destination, index) => (
-                <Box key={index}>
-                  <Box maxW="400px" maxH="500px" borderRadius="md" boxShadow="md" overflow="hidden" display="flex" flexDirection="column" justifyContent="center" textAlign="left" mt="0" m="auto">
-                    <Image src={destination.img} alt="foto-dummy" w="100%" h="auto" />
+                <Box key={index} h="560px">
+                  <Box maxW="410px" h="470px" borderRadius="md" boxShadow="md" overflow="hidden" display="flex" flexDirection="column" textAlign="left" mt="0" m="auto">
+                    <Image src={destination.img} alt="foto-dummy" w="100%" h="auto" mt="0" />
                     <Box p="4">
                       <Heading size="md">{destination.destinasi}</Heading>
                       <Text fontWeight="400" fontSize="18px" mt="2">
@@ -152,7 +152,8 @@ const Landpage = () => {
               ))}
             </Slider>
           </Box>
-          <Box w="100%" h="100vh" pt="10%">
+          <Box pos="absolute" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
+          <Box w="100%" h="170vh" pt="10%" pos="relative">
             <Box textAlign="center">
               <Text mb="0">
                 Meet With Guide
@@ -161,7 +162,7 @@ const Landpage = () => {
                 </Heading>
               </Text>
             </Box>
-            <Box w="100%" h="100%" zIndex="1">
+            <Box w="100%" h="100%" zIndex="1" mt="50px">
               <Slider {...SliderGuider}>
                 {guider.map((guiderPerson, index) => (
                   <Box key={index} pos="relative" textAlign="center" pb="50px" zIndex="10">
@@ -196,6 +197,9 @@ const Landpage = () => {
                 ))}
               </Slider>
             </Box>
+          </Box>
+          <Box>
+            <Text>HALLO</Text>
           </Box>
         </Box>
       </Box>

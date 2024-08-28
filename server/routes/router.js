@@ -5,6 +5,7 @@ const authController = require('../controllers/authcontroller')
 const tripController = require('../controllers/tripcontroller')
 const bookingController = require('../controllers/bookingcontroller')
 const axiosController = require('../controllers/axioscontroller')
+const ContactController = require('../controllers/contactcontroller')
 router.get('/', (req, res) => {
     res.json({
         message: 'STATUS CONNECTED'
@@ -25,5 +26,8 @@ router.get('/booking', bookingController.getBookingData)
 router.get('/booking/:id', bookingController.getBookingDataById)
 
 router.get('/axios/fetch', axiosController.fetchingData)
+
+router.post('/contact', ContactController.postContact)
+router.get('/contact', ContactController.getContact)
 
 module.exports = router

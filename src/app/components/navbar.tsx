@@ -12,16 +12,16 @@ export const Navbar: React.FC = () => {
   const menuItemsNavbar = [
     { menu: "Beranda", path: "/" },
     { menu: "Destination", path: "/destinasi" },
-    { menu: "Hotels", path: "/hotel" },
-    { menu: "Cars", path: "/cars" },
+    { menu: "Services", path: "/service" },
     { menu: "blog", path: "/blog" },
+    { menu: "Contact", path: "/contact" },
   ];
 
   return (
-    <Box w="90%" h="7vh" left="85" bg="white" mt={48} alignItems="center" pos="absolute" p="10px" borderRadius="15px">
-      <Box display="flex" alignItems="center" px="20px">
+    <Box w="90%" h="10vh" left="85" bg="white" mt={38} alignItems="center" pos="absolute" p="10px" borderRadius="15px">
+      <Box display="flex" alignItems="center" px="30px" pt={2}>
         <Box>
-          <Heading fontSize="24" fontWeight="bold">
+          <Heading fontSize="34" fontWeight="bold">
             Keezars
           </Heading>
         </Box>
@@ -29,16 +29,16 @@ export const Navbar: React.FC = () => {
           {menuItemsNavbar.map((listItem, index) => (
             <NextLink key={index} href={listItem.path} passHref>
               <Box _hover={{ textDecoration: "none" }}>
-                <Text textDecoration="none" fontSize="18px" color="black" gap="25px" textAlign="center">
+                <Text textDecoration="none" fontSize="18px" color="black" gap="40px" textAlign="center">
                   {listItem.menu}
                 </Text>
               </Box>
             </NextLink>
           ))}
         </Flex>
-        <Box display="flex" alignItems="center" pr={28} gap={12}>
+        <Box display="flex" alignItems="center" pr={4} gap={4}>
           <Text>Login</Text>
-          <Text p={10} bg="#3FA2F6" borderRadius={20} color="white">
+          <Text p={4} bg="#3FA2F6" borderRadius={20} color="white">
             Register
           </Text>
         </Box>

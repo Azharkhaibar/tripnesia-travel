@@ -23,28 +23,4 @@ export const guider = [
     name: "Ahzar Khaibar",
     job: "tourist guide",
   },
-  {
-    id: 5,
-    pictPerson: "/image/guider.jpeg",
-    name: "Ahzar Khaibar",
-    job: "tourist guide",
-  },
-  {
-    id: 6,
-    pictPerson: "/image/guider.jpeg",
-    name: "Ahzar Khaibar",
-    job: "tourist guide",
-  },
-  {
-    id: 7,
-    pictPerson: "/image/guider.jpeg",
-    name: "Ahzar Khaibar",
-    job: "tourist guide",
-  },
-  {
-    id: 8,
-    pictPerson: "/image/guider.jpeg",
-    name: "Ahzar Khaibar",
-    job: "tourist guide",
-  },
 ];
