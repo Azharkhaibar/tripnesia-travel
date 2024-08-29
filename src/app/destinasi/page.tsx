@@ -8,8 +8,11 @@ import {
   Heading,
   InputGroup, InputLeftElement, Icon,
   Input,
-  Select
+  Select,
+  Button,
+  IconButton
 } from '@chakra-ui/react'
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { SearchIcon } from "@chakra-ui/icons";
 import { Banner } from '../components/banner';
 import NextLink from "next/link";
@@ -19,7 +22,23 @@ import axios from 'axios';
 
 const Destinasi = () => {
   const [fetchDestination, setFetchDestination] = useState<DestinationInterface[]>([]);
-  const [dataDestinasi, setDataDestinasi] = useState<DestinationInterface[]>([]); // Initialize dataDestinasi if needed
+  const [dataDestinasi, setDataDestinasi] = useState<DestinationInterface[]>([]);
+  const itemsPerPage = 9;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(fetchDestination.length / itemsPerPage);
+
+  const currentItems = fetchDestination.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +53,7 @@ const Destinasi = () => {
             id: item.id,
             urlImg: item.urlImg || '/image/banner/pictbanner.avif',
             place: item.destinasi,
-            rating: item.rating || 0,
+            rating: item.rating || Math.floor(Math.random() * 5) + 1,
             price: item.price,
             deskripsi: item.deskripsi,
             start_date: item.start_date,
@@ -44,7 +63,7 @@ const Destinasi = () => {
 
           const combinedData = [...formattedDatabaseData, ...dataDestinasi];
           setFetchDestination(combinedData);
-          console.log('State set to:', combinedData); 
+          console.log('State set to:', combinedData);
         } else {
           console.error('Expected array in data property but got:', data);
         }
@@ -63,7 +82,7 @@ const Destinasi = () => {
         breadcrumbs={["Home", "Destinations"]}
       />
       <Container maxW="95%" h="300vh">
-        <Box w="100%" h="20vh" display="flex" justifyContent="space-around" px="5%" alignItems="center">
+        <Box w="100%" h="20vh" display="flex" justifyContent="space-around" px="3%" alignItems="center">
           <Box w="100%" maxW="700px" mx="auto" alignItems="center" zIndex="1">
             {/* Search Input */}
             <InputGroup flex="1" mr={4}>
@@ -113,22 +132,94 @@ const Destinasi = () => {
             </Box>
           </Box>
         </Box>
-        <Box w="100%" h="300vh" bg="pink">
-          {fetchDestination.map((dataCombined, index) => (
-            <Box key={index} w="100%">
-              <Box w="400px" h="400px">
-                <Image src={dataCombined.urlImg} alt={dataCombined.place} />
-                <Box>
-                  <Heading>{dataCombined.place}</Heading>
-                  <Text>{dataCombined.rating}</Text>
-                  <Box display="flex" alignItems="center">
-                    <Text>{dataCombined.price}</Text>
-                    <Text>/person</Text>
+        <Box w="100%" h="300vh" display="flex" ml="3.5%">
+          <Box w="70%" h="100%">
+            <Box display="flex" flexWrap="wrap" gap="30px">
+              {currentItems.map((dataCombined, index) => (
+                <Box key={index}>
+                  <Box w="340px" h="400px">
+                    <Image src={dataCombined.urlImg} alt={dataCombined.place} />
+                    <Box>
+                      <Heading fontSize="25" pt="2">{dataCombined.place}</Heading>
+                      <Text pt="2">Rating / {dataCombined.rating}</Text>
+                      <Box display="flex" alignItems="center">
+                        <Text fontWeight="600" fontSize="24px">${dataCombined.price}</Text>
+                        <Text fontSize="18" fontWeight="500" opacity="0.6">/person</Text>
+                      </Box>
+                      <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Text>7days</Text>
+                        <Text p="2" px="7" bg="whitesmoke" borderRadius="20">Book now</Text>
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
+              ))}
+            </Box>
+            <Box display="flex" justifyContent="center" alignItems="center" mt="4" p="2" borderRadius="md" m="auto">
+              <IconButton
+                onClick={handlePreviousPage}
+                isDisabled={currentPage === 1}
+                icon={<ChevronLeftIcon />}
+                aria-label="Previous page"
+                colorScheme="teal"
+                variant="outline"
+                size="lg"
+                borderRadius="full"
+                mx="2"
+              />
+              <Text mx="4" color="black" fontSize="lg" fontWeight="bold">
+                Page {currentPage} of {totalPages}
+              </Text>
+              <IconButton
+                onClick={handleNextPage}
+                isDisabled={currentPage === totalPages}
+                icon={<ChevronRightIcon />}
+                aria-label="Next page"
+                colorScheme="teal"
+                variant="outline"
+                size="lg"
+                borderRadius="full"
+                mx="2"
+              />
+            </Box>
+
+          </Box>
+          <Box maxW="20%" h="100%" m="auto">
+            <Box
+              maxW="280px"
+              mr="4"
+              h="auto"
+              bg="transparent"
+              p="5"
+              borderRadius="10px"
+              border="1px solid black"
+            >
+              <Heading fontSize="24px" mb="3">
+                Popular Tags
+              </Heading>
+              <Box w="100%" h="2px" bg="black" opacity="0.3" mt="3" mb="4"></Box>
+              <Box display="flex" flexWrap="wrap" gap="2">
+                {["Tour", "Adventure", "Travel", "Innovate", "Modern", "Luxury"].map(
+                  (popTag, index) => (
+                    <Box
+                      key={index}
+                      bg="pink.200"
+                      color="gray.700"
+                      p="2"
+                      borderRadius="md"
+                      fontSize="sm"
+                      textAlign="center"
+                      boxShadow="sm"
+                      
+                    >
+                      <Text fontSize="15px" fontWeight="500" color="blue">{popTag}</Text>
+                    </Box>
+                  )
+                )}
               </Box>
             </Box>
-          ))}
+          </Box>
+
         </Box>
       </Container>
     </Box>
