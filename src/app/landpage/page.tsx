@@ -85,23 +85,23 @@ const Landpage = () => {
             This beguiling nation of over 17,000 islands is home to a huge diversity of adventures to choose from – Indonesia's sheer range of experiences is hard to beat.
           </Text>
           <Box display="flex" gap="20px">
-            <Text p="12px" bg="blue" color="white" borderRadius="md" cursor="pointer">
+            <Text p="12px" bg="blue" color="white" borderRadius="22px" cursor="pointer">
               Best Time for Visit
             </Text>
-            <Text p="12px" bg="blue" color="white" borderRadius="md" cursor="pointer">
+            <Text p="12px" bg="blue" color="white" borderRadius="23px" cursor="pointer">
               Best Places to Visit
             </Text>
           </Box>
         </Box>
         <Box w="50%" h="100%">
-          <Box m="auto" mt="17%" bg="#D1E9F6" h="auto " p="20px" textAlign="center" w="450px">
+          <Box m="auto" mt="17%" bg="#D1E9F6" h="auto " borderRadius="12px" p="20px" textAlign="center" w="450px">
             <Heading fontSize="28px">
               Plan your trip with Guide, an AI travel planner!
               <Text fontSize="16px" fontWeight="400" mt={4}>
                 Create a personalized trip itinerary in seconds using artificial intelligence.
               </Text>
               <NextLink href="/destinasi">
-                <Text bg="#3FA2F6" w="400px" m="auto" fontSize="18px" p="10px" color="white" mt="11%">
+                <Text bg="#3FA2F6" w="400px" m="auto" borderRadius="23px" fontSize="18px" p="10px" color="white" mt="11%">
                   Create a Trip
                 </Text>
               </NextLink>

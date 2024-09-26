@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Box, Flex, Text, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
+import path from "path";
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,15 +11,20 @@ export const Navbar: React.FC = () => {
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const menuItemsNavbar = [
-    { menu: "Beranda", path: "/" },
+    { menu: "Beranda", path: "/landpage" },
     { menu: "Destination", path: "/destinasi" },
     { menu: "Services", path: "/service" },
     { menu: "blog", path: "/blog" },
-    { menu: "Contact", path: "/contact" },
+    { menu: "Contact", path: "/contact" },    
   ];
 
+  const authItemsMenu = [
+    { menu: "register", path: "/register" },
+    { menu: "login", path: "/login"}
+  ]
+
   return (
-    <Box w="90%" h="10vh" left="85" bg="white" mt={38} alignItems="center" pos="absolute" p="10px" borderRadius="15px">
+    <Box w="90%" h="10vh" left="85" bg="white" mt={38} alignItems="center" pos="absolute" p="10px" borderRadius="15px" zIndex="999">
       <Box display="flex" alignItems="center" px="30px" pt={2}>
         <Box>
           <Heading fontSize="34" fontWeight="bold">
@@ -37,10 +43,14 @@ export const Navbar: React.FC = () => {
           ))}
         </Flex>
         <Box display="flex" alignItems="center" pr={4} gap={4}>
-          <Text>Login</Text>
-          <Text p={4} bg="#3FA2F6" borderRadius={20} color="white">
-            Register
-          </Text>
+          <NextLink href={authItemsMenu[0].path}>
+            <Text>{authItemsMenu[0].menu}</Text>
+          </NextLink>
+          <NextLink href={authItemsMenu[1].path}>
+            <Text p={4} bg="#3FA2F6" borderRadius={20} color="white">
+              {authItemsMenu[1].menu}
+            </Text>
+          </NextLink>
         </Box>
       </Box>
     </Box>

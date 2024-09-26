@@ -16,6 +16,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { SearchIcon } from "@chakra-ui/icons";
 import { Banner } from '../components/banner';
 import NextLink from "next/link";
+import { Navbar } from '../components/navbar';
 import { DestinationInterface } from '../interface/destination';
 import { dataDestinasi } from '../data/datadestinasi';
 import axios from 'axios';
