@@ -1,6 +1,11 @@
 import { Box, Heading, Input, Button, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 const Register = () => {
+    const authItemsMenu = [
+        {menu: "Sign In", path: "/login"},
+        {menu: "Sign Up", path: "/register"}
+    ]
     return (
         <Box
             w="100%"
@@ -81,7 +86,9 @@ const Register = () => {
                         Register
                     </Button>
                     <Text pt="4%" fontWeight="500">
-                        Already Have an account? <span style={{color: "blue", cursor: "pointer"}}>Sign Up</span>
+                        Already Have an account? <NextLink href={authItemsMenu[0].path}>
+                            <span style={{ color: "blue", cursor: "pointer" }}>{authItemsMenu[0].menu}</span>
+                        </NextLink>
                     </Text>
                 </form>
             </Box>
