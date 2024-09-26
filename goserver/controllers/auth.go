@@ -20,19 +20,19 @@ type Claims struct {
 func Register(c *gin.Context) {
     var newUser models.UserAuth
     if err := c.ShouldBindJSON(&newUser); err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Data Error"})
         return
     }
     // hash password
-    hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
+    hashPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
     if err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal Hash Password"})
         return
     }
-    newUser.Password = string(hashedPassword)
+    newUser.Password = string(hashPassword)
     err = models.CreateUser(&newUser)
     if err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal menambahkan data User"})
         return
     }
 
@@ -61,7 +61,7 @@ func Login(c *gin.Context) {
     }
 
     // Buat token JWT
-    TimeExpiration := time.Now().Add(1 * time.Hour)
+    TimeExpiration := timeNow.Now().Add(1 * timeNow.Hour)
     claims := &Claims{
         Username: foundUser.Username,
         RegisteredClaims: jwt.RegisteredClaims{
