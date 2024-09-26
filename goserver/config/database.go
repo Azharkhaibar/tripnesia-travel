@@ -17,14 +17,14 @@ func ConnectDB() {
 
     DB, err = sql.Open("mysql", dsn)
     if err != nil {
-        log.Fatal("Error opening database:", err)
+        log.Fatal("gagal membuka database:", err)
     }
 
     // Check if the connection is successful
     err = DB.Ping()
     if err != nil {
-        log.Fatal("Error connecting to database:", err)
+        log.Fatal("Error konek database:", err)
     }
 
-    fmt.Println("Database connected successfully!")
+    fmt.Println("Koneksi Database Berhasil!")
 }
