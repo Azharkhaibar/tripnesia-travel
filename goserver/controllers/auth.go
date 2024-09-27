@@ -4,6 +4,7 @@ import (
     "goserver/config"
     "net/http"
     "time"
+    "strconv"
     "github.com/gin-gonic/gin"
     "github.com/golang-jwt/jwt/v4"
     "golang.org/x/crypto/bcrypt"
@@ -39,6 +40,22 @@ func Register(c *gin.Context) {
     c.JSON(http.StatusCreated, newUser)
 }
 
+func GetUserById(c *gin.Context) {
+	idParam := c.Param("id")
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	user, err := models.GetUserById(id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
+	c.JSON(http.StatusOK, user)
+}
+
+
 // Login user
 func Login(c *gin.Context) {
     var loginUser models.UserAuth
@@ -61,7 +78,7 @@ func Login(c *gin.Context) {
     }
 
     // Buat token JWT
-    TimeExpiration := timeNow.Now().Add(1 * timeNow.Hour)
+    TimeExpiration := time.Now().Add(1 * time.Hour)
     claims := &Claims{
         Username: foundUser.Username,
         RegisteredClaims: jwt.RegisteredClaims{

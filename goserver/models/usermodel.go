@@ -3,6 +3,8 @@ package models
 import (
     "goserver/config"
     "log"
+    "database/sql"
+    "errors"
 )
 
 // UserAuth digunakan untuk proses autentikasi
@@ -25,6 +27,19 @@ func GetUserByEmail(email string) (*UserAuth, error) {
     }
 
     return &user, nil
+}
+
+func GetUserById(id int) (*UserAuth, error) {
+	var user UserAuth
+	query := "SELECT id, username, firstname, lastname, email, password FROM authusers WHERE id = ?"
+	err := config.DB.QueryRow(query, id).Scan(&user.Id, &user.Username, &user.Firstname, &user.Lastname, &user.Email, &user.Password)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, errors.New("user not found")
+		}
+		return nil, err
+	}
+	return &user, nil
 }
 
 // CreateUser untuk menyimpan user baru di database
