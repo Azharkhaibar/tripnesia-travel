@@ -40,6 +40,16 @@ func Register(c *gin.Context) {
     c.JSON(http.StatusCreated, newUser)
 }
 
+func GetAllUser(c *gin.Context) {
+    users, err := models.GetAllUsers()
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
+        return
+    }
+    c.JSON(http.StatusOK, users)
+}
+
+
 func GetUserById(c *gin.Context) {
 	idParam := c.Param("id")
 	id, err := strconv.Atoi(idParam)

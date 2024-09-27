@@ -11,7 +11,8 @@ func SetupAuthRoutes(r *gin.Engine) {
 	{
 		authRoutes.POST("/register", controllers.Register)
 		authRoutes.POST("/login", controllers.Login)
-
+        
+		authRoutes.GET("/user", controllers.GetAllUser)
 		authRoutes.GET("/user/:id", controllers.GetUserById)
 		authRoutes.DELETE("user/:id", controllers.DeleteUserById)
 

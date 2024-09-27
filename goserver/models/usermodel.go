@@ -17,6 +17,28 @@ type UserAuth struct {
     Password  string `json:"password"`
 }
 
+func GetAllUsers() ([]UserAuth, error) {
+    var userAuth []UserAuth
+    queryDB := "SELECT id, username, firstname, lastname, email, password FROM authusers"
+    rowsDB, err := config.DB.Query(queryDB)
+    if err != nil {
+        return nil, err
+    }
+    defer rowsDB.Close()
+
+    for rowsDB.Next() {
+        var user UserAuth
+        if err := rowsDB.Scan(&user.Id, &user.Username, &user.Firstname, &user.Lastname, &user.Email, &user.Password); err != nil {
+            return nil, err
+        }
+        userAuth = append(userAuth, user)
+    }
+    if err := rowsDB.Err(); err != nil {
+        return nil, err
+    }
+    return userAuth, nil
+}
+
 // GetUserByEmail mengambil data user berdasarkan email
 func GetUserByEmail(email string) (*UserAuth, error) {
     var user UserAuth
