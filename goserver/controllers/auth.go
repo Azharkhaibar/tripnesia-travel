@@ -55,6 +55,21 @@ func GetUserById(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
+func DeleteUserById(c *gin.Context) {
+    idParam := c.Param("id")
+    id, err := strconv.Atoi(idParam)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+        return
+    }
+    err = models.DeleteUserById(id)
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "gagal delete ID"})
+        return
+    }
+    c.JSON(http.StatusOK, gin.H{"message":"sukses menghapus data"})
+}
+
 
 // Login user
 func Login(c *gin.Context) {

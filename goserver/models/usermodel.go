@@ -42,6 +42,15 @@ func GetUserById(id int) (*UserAuth, error) {
 	return &user, nil
 }
 
+func DeleteUserById(id int) error {
+    queryDB := "DELETE FROM authusers WHERE id = ?"
+    _, err := config.DB.Exec(queryDB, id)
+    if err != nil {
+        return err
+    }
+    return nil
+}
+
 // CreateUser untuk menyimpan user baru di database
 func CreateUser(user *UserAuth) error {
     ExecuteQueryRow := "INSERT INTO authusers (username, firstname, lastname, email, password) VALUES (?, ?, ?, ?, ?)"
