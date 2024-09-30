@@ -1,10 +1,12 @@
 package controllers
 
 import (
+    "fmt" // Import fmt for logging
     "goserver/config"
     "net/http"
     "time"
     "strconv"
+    
     "github.com/gin-gonic/gin"
     "github.com/golang-jwt/jwt/v4"
     "golang.org/x/crypto/bcrypt"
@@ -24,7 +26,7 @@ func Register(c *gin.Context) {
         c.JSON(http.StatusBadRequest, gin.H{"error": "Data Error"})
         return
     }
-    // hash password
+    // Hash password
     hashPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
     if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal Hash Password"})
@@ -49,20 +51,19 @@ func GetAllUser(c *gin.Context) {
     c.JSON(http.StatusOK, users)
 }
 
-
 func GetUserById(c *gin.Context) {
-	idParam := c.Param("id")
-	id, err := strconv.Atoi(idParam)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
-		return
-	}
-	user, err := models.GetUserById(id)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
-		return
-	}
-	c.JSON(http.StatusOK, user)
+    idParam := c.Param("id")
+    id, err := strconv.Atoi(idParam)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+        return
+    }
+    user, err := models.GetUserById(id)
+    if err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+        return
+    }
+    c.JSON(http.StatusOK, user)
 }
 
 func DeleteUserById(c *gin.Context) {
@@ -74,49 +75,60 @@ func DeleteUserById(c *gin.Context) {
     }
     err = models.DeleteUserById(id)
     if err != nil {
-        c.JSON(http.StatusInternalServerError, gin.H{"error": "gagal delete ID"})
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Gagal delete ID"})
         return
     }
-    c.JSON(http.StatusOK, gin.H{"message":"sukses menghapus data"})
+    c.JSON(http.StatusOK, gin.H{"message": "Sukses menghapus data"})
 }
-
 
 // Login user
 func Login(c *gin.Context) {
     var loginUser models.UserAuth
+    // Bind the incoming JSON to the loginUser struct
     if err := c.ShouldBindJSON(&loginUser); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
         return
     }
 
-    // Ambil user dari database berdasarkan email
+    // Fetch user from database based on email
     foundUser, err := models.GetUserByEmail(loginUser.Email)
     if err != nil {
+        // Log the error for debugging purposes
+        fmt.Printf("Error fetching user: %v\n", err)
         c.JSON(http.StatusUnauthorized, gin.H{"error": "User not found"})
         return
     }
 
-    // Cek password
+    // Debug: Log retrieved user details
+    fmt.Printf("Retrieved user: %v\n", foundUser)
+    fmt.Printf("Password Hash: %s\n", foundUser.Password)
+
+    // Compare the hashed password with the provided password
     if err := bcrypt.CompareHashAndPassword([]byte(foundUser.Password), []byte(loginUser.Password)); err != nil {
         c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
         return
     }
 
-    // Buat token JWT
-    TimeExpiration := time.Now().Add(1 * time.Hour)
+    // Create JWT token with 1 hour expiration
+    expirationTime := time.Now().Add(1 * time.Hour)
     claims := &Claims{
         Username: foundUser.Username,
         RegisteredClaims: jwt.RegisteredClaims{
-            ExpiresAt: jwt.NewNumericDate(TimeExpiration),
+            ExpiresAt: jwt.NewNumericDate(expirationTime),
         },
     }
+
+    // Sign the token
     token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-    tokenString, err := token.SignedString(config.JwtKey)  // Menggunakan config.JwtKey
+    tokenString, err := token.SignedString(config.JwtKey)
     if err != nil {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create token"})
         return
     }
 
-    // Kirim token ke client
-    c.JSON(http.StatusOK, gin.H{"token": tokenString})
+    // Return the token to the client
+    c.JSON(http.StatusOK, gin.H{
+        "token":     tokenString,
+        "expiresAt": expirationTime.Format(time.RFC3339),
+    })
 }
