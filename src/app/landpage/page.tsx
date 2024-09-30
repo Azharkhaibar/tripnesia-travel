@@ -109,6 +109,8 @@ const Landpage = () => {
           </Box>
         </Box>
       </Box>
+
+      {/* SLIDER  */}
       <Box w="100%" h="100vh">
         <Box w="90%" m="auto">
           <Box display="flex" justifyContent="space-between" px="13px" alignItems="center">
@@ -124,10 +126,10 @@ const Landpage = () => {
               See all
             </Text>
           </Box>
-          <Box width="100%" maxW="1480px" mx="auto" mt="3%" h="500px">
+          <Box width="100%" maxW="1480px" mx="auto" mt="2%" h="500px">
             <Slider {...settings}>
               {dataDestinations.map((destination, index) => (
-                <Box key={index} h="560px">
+                <Box key={index} h="520px">
                   <Box maxW="410px" h="470px" borderRadius="md" boxShadow="md" overflow="hidden" display="flex" flexDirection="column" textAlign="left" mt="0" m="auto">
                     <Image src={destination.img} alt="foto-dummy" w="100%" h="auto" mt="0" />
                     <Box p="4">
