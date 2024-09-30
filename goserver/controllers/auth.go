@@ -1,7 +1,7 @@
 package controllers
 
 import (
-    "fmt" // Import fmt for logging
+    "fmt" 
     "goserver/config"
     "net/http"
     "time"
@@ -81,35 +81,28 @@ func DeleteUserById(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"message": "Sukses menghapus data"})
 }
 
-// Login user
 func Login(c *gin.Context) {
     var loginUser models.UserAuth
-    // Bind the incoming JSON to the loginUser struct
     if err := c.ShouldBindJSON(&loginUser); err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
         return
     }
 
-    // Fetch user from database based on email
+    // ambil data dari db
     foundUser, err := models.GetUserByEmail(loginUser.Email)
     if err != nil {
-        // Log the error for debugging purposes
         fmt.Printf("Error fetching user: %v\n", err)
         c.JSON(http.StatusUnauthorized, gin.H{"error": "User not found"})
         return
     }
 
-    // Debug: Log retrieved user details
     fmt.Printf("Retrieved user: %v\n", foundUser)
     fmt.Printf("Password Hash: %s\n", foundUser.Password)
-
-    // Compare the hashed password with the provided password
     if err := bcrypt.CompareHashAndPassword([]byte(foundUser.Password), []byte(loginUser.Password)); err != nil {
         c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
         return
     }
 
-    // Create JWT token with 1 hour expiration
     expirationTime := time.Now().Add(1 * time.Hour)
     claims := &Claims{
         Username: foundUser.Username,
@@ -125,8 +118,6 @@ func Login(c *gin.Context) {
         c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create token"})
         return
     }
-
-    // Return the token to the client
     c.JSON(http.StatusOK, gin.H{
         "token":     tokenString,
         "expiresAt": expirationTime.Format(time.RFC3339),
