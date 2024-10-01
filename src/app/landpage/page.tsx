@@ -4,7 +4,7 @@ import { Navbar } from '../components/navbar'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { Box, Container, Text, Heading, Image, Flex, Button, Card } from '@chakra-ui/react'
+import { Box, Text, Heading, Image, Flex, Button, Card } from '@chakra-ui/react'
 import NextLink from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { dataDestinations } from '../data/metadata1'
@@ -13,35 +13,30 @@ import '../design/reactslider.css'
 import axios from 'axios';
 const Landpage = () => {
   const [popularDestinations, setPopularDestinations] = useState([])
-  const settings = {
+  const commonSliderSettings = {
     dots: true,
     infinite: true,
-    centerMode: false,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 2500,
     pauseOnHover: true,
     arrows: true,
-    cssEase: "ease-in-out",
     nextArrow: <ChevronRightIcon w={8} h={8} color="gray.500" />,
     prevArrow: <ChevronLeftIcon w={8} h={8} color="gray.500" />,
   };
 
+  const settings = {
+    ...commonSliderSettings,
+    autoplaySpeed: 2500,
+    cssEase: "ease-in-out",
+  };
+  
   const SliderGuider = {
-    dots: true,
-    infinite: true,
-    centerMode: false,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: true,
+    ...commonSliderSettings,
     speed: 1500,
     autoplaySpeed: 4000,
-    pauseOnHover: true,
-    arrows: true,
-    nextArrow: <ChevronRightIcon w={8} h={8} color="gray.500" />,
-    prevArrow: <ChevronLeftIcon w={8} h={8} color="gray.500" />,
   };
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/axios/fetch")
@@ -82,7 +77,7 @@ const Landpage = () => {
             </Heading>
           </Box>
           <Text mb="20px" mt="0" fontSize="20px">
-            This beguiling nation of over 17,000 islands is home to a huge diversity of adventures to choose from – Indonesia's sheer range of experiences is hard to beat.
+            This beguiling nation of over 17,000 islands is home to a huge diversity of adventures to choose from – Indonesias sheer range of experiences is hard to beat.
           </Text>
           <Box display="flex" gap="20px">
             <Text p="12px" bg="blue" color="white" borderRadius="22px" cursor="pointer">
@@ -112,13 +107,13 @@ const Landpage = () => {
 
       {/* SLIDER  */}
       <Box w="100%" h="100vh">
-        <Box w="90%" m="auto">
-          <Box display="flex" justifyContent="space-between" px="13px" alignItems="center">
+        <Box w="100%" m="auto">
+          <Box display="flex" justifyContent="space-between" px="6%" alignItems="center">
             <Box display="flex" flexDirection="column" w="400px">
               <Heading mb="0" fontSize="35px" pl="1%">
                 Popular Destination
                 <Text mt="15" fontSize="18px" fontWeight="400" opacity="">
-                  Let's enjoy this heaven on earth
+                  Lets enjoy this heaven on earth
                 </Text>
               </Heading>
             </Box>
@@ -154,8 +149,59 @@ const Landpage = () => {
               ))}
             </Slider>
           </Box>
-          <Box pos="absolute" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
-          <Box w="100%" h="170vh" pt="10%" pos="relative">
+
+          <Box w="100%" h="90vh"  mt="6%" borderRadius="20px" p="0"
+            pos="relative"
+          >
+              <Heading
+                fontSize="70px"
+                fontWeight="700"
+                textAlign="center"
+                zIndex="999"
+                color="white"
+                pos="absolute"
+                right="0"
+                left="0"
+                top="37%"
+              >
+                Discover story-worthy<br /> travel moments
+              </Heading>
+            <Box
+              bg="black"
+              w="100%"
+              h="100%"
+              opacity="0.1"
+              pos="absolute"
+            ></Box>
+            <Box display="flex" alignItems="center" justifyContent="space-between" w="100%" h="100%" p="0" m="0">
+              <Box
+                w="33.33%" 
+                h="100%"
+                bgImage="url('/image/panorama/baliwonderful.png')"
+                bgSize="cover" 
+                bgPosition="center"
+              ></Box>
+              <Box
+                w="33.33%"
+                h="100%"
+                bgImage="url('/image/panorama/ntt.png')"
+                bgSize="cover"
+                bgPosition="center"
+              ></Box>
+              <Box
+                w="33.33%"
+                h="100%"
+                bgImage="url('/image/panorama/wowplace.png')"
+                bgSize="cover"
+                bgPosition="center"
+              ></Box>
+            </Box>
+          </Box>
+
+
+
+          <Box pos="relative" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
+          <Box w="100%" h="170vh" pt="8%" pos="relative" px='6%'>
             <Box textAlign="center">
               <Text mb="0">
                 Meet With Guide

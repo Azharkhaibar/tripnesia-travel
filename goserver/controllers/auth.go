@@ -111,7 +111,6 @@ func Login(c *gin.Context) {
         },
     }
 
-    // Sign the token
     token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
     tokenString, err := token.SignedString(config.JwtKey)
     if err != nil {
