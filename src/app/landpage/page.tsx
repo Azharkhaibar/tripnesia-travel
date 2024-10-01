@@ -4,7 +4,17 @@ import { Navbar } from '../components/navbar'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { Box, Text, Heading, Image, Flex, Button, Card } from '@chakra-ui/react'
+import { EmailIcon } from '@chakra-ui/icons';
+import { 
+  Box, 
+  Text, 
+  Heading, 
+  Image, 
+  Flex, 
+  Button, 
+  Card,
+  Input 
+} from '@chakra-ui/react'
 import NextLink from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { dataDestinations } from '../data/metadata1'
@@ -31,7 +41,7 @@ const Landpage = () => {
     cssEase: "ease-in-out",
   };
   
-  const SliderGuider = {
+  const sliderGuider = {
     ...commonSliderSettings,
     speed: 1500,
     autoplaySpeed: 4000,
@@ -180,28 +190,70 @@ const Landpage = () => {
                 bgImage="url('/image/panorama/baliwonderful.png')"
                 bgSize="cover" 
                 bgPosition="center"
-              ></Box>
+                pos="relative"
+              >
+                <Box pos="absolute" w="100%" h="100%" bg="black" opacity="0.2" _hover={{bg: "transparent", transition: "0.3s ease-in-out"}}>
+                </Box>
+                <Heading
+                  pos="absolute"
+                  bottom="4%"
+                  left="2%"
+                  p="20px"
+                  fontSize="32px"
+                  color="white"
+                >
+                  top 5 vacation destination best to visit in summer
+                </Heading>
+              </Box>
               <Box
                 w="33.33%"
                 h="100%"
                 bgImage="url('/image/panorama/ntt.png')"
                 bgSize="cover"
                 bgPosition="center"
-              ></Box>
+                pos="relative"
+              >
+                <Box pos="absolute" w="100%" h="100%" bg="black" opacity="0.2" _hover={{ bg: "transparent", transition: "0.3s ease-in-out" }}>
+                </Box>
+                <Heading
+                  pos="absolute"
+                  bottom="4%"
+                  left="2%"
+                  p="20px"
+                  fontSize="32px"
+                  color="white"
+                >
+                  top 5 vacation destination best to visit in summer
+                </Heading>
+              </Box>
               <Box
                 w="33.33%"
                 h="100%"
                 bgImage="url('/image/panorama/wowplace.png')"
                 bgSize="cover"
                 bgPosition="center"
-              ></Box>
+                pos="relative"
+              >
+                <Box pos="absolute" w="100%" h="100%" bg="black" opacity="0.2" _hover={{ bg: "transparent", transition: "0.3s ease-in-out" }}>
+                </Box>
+                <Heading
+                  pos="absolute"
+                  bottom="4%"
+                  left="2%"
+                  p="20px"
+                  fontSize="32px"
+                  color="white"
+                >
+                  top 5 vacation destination best to visit in summer
+                </Heading>
+              </Box>
             </Box>
           </Box>
 
 
 
           <Box pos="relative" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
-          <Box w="100%" h="170vh" pt="8%" pos="relative" px='6%'>
+          <Box w="100%" h="70vh" pt="8%" pos="relative" px='6%'>
             <Box textAlign="center">
               <Text mb="0">
                 Meet With Guide
@@ -211,7 +263,7 @@ const Landpage = () => {
               </Text>
             </Box>
             <Box w="100%" h="100%" zIndex="1" mt="50px">
-              <Slider {...SliderGuider}>
+              <Slider {...sliderGuider}>
                 {guider.map((guiderPerson, index) => (
                   <Box key={index} pos="relative" textAlign="center" pb="50px" zIndex="10">
                     <Image
@@ -246,8 +298,42 @@ const Landpage = () => {
               </Slider>
             </Box>
           </Box>
-          <Box>
-            <Text>HALLO</Text>
+
+          <Box w="100%" h="40vh" bg="blue.100" p={5} borderRadius="md">
+            <Box w="100%" h="100%">
+              <Flex direction="column" alignItems="center" justifyContent="center" h="100%">
+                <Box w="60px" h="60px" borderRadius="full" bg="white" display="flex" alignItems="center" justifyContent="center">
+                  <EmailIcon boxSize={8} color="blue.500" />
+                </Box>
+                <Heading as="h2" size="xl" textAlign="center" mb={4}>
+                  Travel inspiration delivered<br /> directly to your inbox
+                </Heading>
+                <Box display="flex" alignItems="center" justifyContent="center" mb={4}>
+                  <Input
+                    placeholder="Enter your email"
+                    size="lg"
+                    width="500px" 
+                    borderColor="blue.400"
+                    borderRadius="25px"
+                    _focus={{ borderColor: "blue.500" }}
+                    mr={2}
+                  />
+
+                  <Button colorScheme="blue" size="lg"
+                    borderRadius="25px"
+                  >
+                    Subscribe Now
+                  </Button>
+                </Box>
+                <Text textAlign="center" color="gray.600" fontSize="sm">
+                  Subscribe to our newsletters and promotions. Read our
+                  <Text as="span" color="blue.500" textDecoration="underline"> Privacy Policy.</Text>
+                </Text>
+              </Flex>
+            </Box>
+          </Box>
+          <Box w="100%" h="200vh">
+            <Box></Box>
           </Box>
         </Box>
       </Box>
