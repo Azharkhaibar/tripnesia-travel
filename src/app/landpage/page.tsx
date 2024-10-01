@@ -5,15 +5,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { EmailIcon } from '@chakra-ui/icons';
-import { 
-  Box, 
-  Text, 
-  Heading, 
-  Image, 
-  Flex, 
-  Button, 
+import {
+  Box,
+  Text,
+  Heading,
+  Image,
+  Flex,
+  Button,
   Card,
-  Input 
+  Input
 } from '@chakra-ui/react'
 import NextLink from "next/link";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
@@ -40,7 +40,7 @@ const Landpage = () => {
     autoplaySpeed: 2500,
     cssEase: "ease-in-out",
   };
-  
+
   const sliderGuider = {
     ...commonSliderSettings,
     speed: 1500,
@@ -59,8 +59,8 @@ const Landpage = () => {
   }, [])
   return (
     <Box maxW="100%" h="250vh">
-      <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')" 
-      h="95vh" bgSize="cover" bgRepeat="no-repeat" 
+      <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')"
+        h="95vh" bgSize="cover" bgRepeat="no-repeat"
       >
         <Navbar />
         <Box textAlign="center" pt="9%">
@@ -162,22 +162,22 @@ const Landpage = () => {
             </Slider>
           </Box>
 
-          <Box w="100%" h="90vh"  mt="6%" borderRadius="20px" p="0"
+          <Box w="100%" h="90vh" mt="6%" borderRadius="20px" p="0"
             pos="relative"
           >
-              <Heading
-                fontSize="70px"
-                fontWeight="700"
-                textAlign="center"
-                zIndex="999"
-                color="white"
-                pos="absolute"
-                right="0"
-                left="0"
-                top="37%"
-              >
-                Discover story-worthy<br /> travel moments
-              </Heading>
+            <Heading
+              fontSize="70px"
+              fontWeight="700"
+              textAlign="center"
+              zIndex="999"
+              color="white"
+              pos="absolute"
+              right="0"
+              left="0"
+              top="37%"
+            >
+              Discover story-worthy<br /> travel moments
+            </Heading>
             <Box
               bg="black"
               w="100%"
@@ -187,14 +187,14 @@ const Landpage = () => {
             ></Box>
             <Box display="flex" alignItems="center" justifyContent="space-between" w="100%" h="100%" p="0" m="0">
               <Box
-                w="33.33%" 
+                w="33.33%"
                 h="100%"
                 bgImage="url('/image/panorama/baliwonderful.png')"
-                bgSize="cover" 
+                bgSize="cover"
                 bgPosition="center"
                 pos="relative"
               >
-                <Box pos="absolute" w="100%" h="100%" bg="black" opacity="0.2" _hover={{bg: "transparent", transition: "0.3s ease-in-out"}}>
+                <Box pos="absolute" w="100%" h="100%" bg="black" opacity="0.2" _hover={{ bg: "transparent", transition: "0.3s ease-in-out" }}>
                 </Box>
                 <Heading
                   pos="absolute"
@@ -301,6 +301,53 @@ const Landpage = () => {
             </Box>
           </Box>
 
+          <Box
+            w="100%"
+            h="70vh"
+            bgImage="url(/image/panorama/travelguider.png)"
+            bgRepeat="no-repeat"
+            bgSize="cover"
+            pos="relative"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Box
+              w="100%"
+              h="100%"
+              bgGradient="linear(to-r, blackAlpha.600, blackAlpha.400)"
+              pos="absolute"
+              top="0"
+              left="0"
+              zIndex="1"
+            />
+            <Box
+              pos="relative"
+              zIndex="2"
+              textAlign="center"
+              color="white"
+              maxW="800px"
+              px="20px"
+            >
+              <Heading
+                fontSize={{ base: "24px", md: "52px" }}
+                fontWeight="bold"
+                lineHeight="1.2"
+                mb="10px"
+              >
+                We’re here to take you
+              </Heading>
+              <Heading
+                fontSize={{ base: "24px", md: "52px" }}
+                fontWeight="bold"
+                lineHeight="1.2"
+              >
+                to the places youll love
+              </Heading>
+            </Box>
+          </Box>
+
+
           <Box w="100%" h="40vh" bg="blue.100" p={5} borderRadius="md">
             <Box w="100%" h="100%">
               <Flex direction="column" alignItems="center" justifyContent="center" h="100%">
@@ -314,7 +361,7 @@ const Landpage = () => {
                   <Input
                     placeholder="Enter your email"
                     size="lg"
-                    width="500px" 
+                    width="500px"
                     borderColor="blue.400"
                     borderRadius="25px"
                     _focus={{ borderColor: "blue.500" }}
