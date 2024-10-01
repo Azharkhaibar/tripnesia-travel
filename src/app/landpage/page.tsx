@@ -59,17 +59,19 @@ const Landpage = () => {
   }, [])
   return (
     <Box maxW="100%" h="250vh">
-      <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')" h="80vh" bgSize="cover" bgRepeat="no-repeat">
+      <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')" 
+      h="95vh" bgSize="cover" bgRepeat="no-repeat" 
+      >
         <Navbar />
-        <Box textAlign="center" pt="15%">
-          <Heading fontSize="65px" color="white">
+        <Box textAlign="center" pt="9%">
+          <Heading fontSize="80px" color="white">
             Lets Make Your Best
             <br /> Trip Ever
-            <Text fontSize="18px" fontWeight="400">
+            <Text fontSize="18px" fontWeight="400" pt="1%">
               Plan and book your perfect trip with expert advice, travel tips, destination information and inspiration from us.
             </Text>
             <Box mt="4%">
-              <Text color="white" p="15px" bg="#3FA2F6" w="170px" textAlign="center" m="auto" fontSize="18px" borderRadius="10px" cursor="pointer">
+              <Text color="white" p="15px" bg="#3FA2F6" w="170px" textAlign="center" m="auto" fontSize="18px" borderRadius="25px" cursor="pointer">
                 Discover Now
               </Text>
             </Box>
