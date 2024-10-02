@@ -345,7 +345,7 @@ const Landpage = () => {
             </Box>
 
             <Box display="flex"
-              bg="rgba(255, 255, 255, 0.3)"  // Warna putih dengan transparansi 60%
+              bg="rgba(255, 255, 255, 0.3)"  
               w="55%"
               m="auto"
               mt="5%"
@@ -358,8 +358,8 @@ const Landpage = () => {
               boxShadow="xl"
               flexWrap="wrap"
               zIndex="999"
-              backdropFilter="blur(10px)"  // Efek blur untuk kaca
-              border="1px solid rgba(255, 255, 255, 0.2)"  // Memberikan kesan lebih glossy
+              backdropFilter="blur(10px)"
+              border="1px solid rgba(255, 255, 255, 0.2)" 
             >
               {["Traveller served", "Destinations visited", "Tours organized", "Happy customers"].map((text, index) => (
                 <Box key={index}
