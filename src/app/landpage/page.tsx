@@ -303,19 +303,17 @@ const Landpage = () => {
 
           <Box
             w="100%"
-            h="70vh"
+            h="80vh"
             bgImage="url(/image/panorama/travelguider.png)"
             bgRepeat="no-repeat"
             bgSize="cover"
             pos="relative"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
+            overflow="hidden"
           >
             <Box
               w="100%"
               h="100%"
-              bgGradient="linear(to-r, blackAlpha.600, blackAlpha.400)"
+              
               pos="absolute"
               top="0"
               left="0"
@@ -326,14 +324,14 @@ const Landpage = () => {
               zIndex="2"
               textAlign="center"
               color="white"
-              maxW="800px"
-              px="20px"
+              
             >
               <Heading
                 fontSize={{ base: "24px", md: "52px" }}
                 fontWeight="bold"
                 lineHeight="1.2"
                 mb="10px"
+                pt="10%"
               >
                 We’re here to take you
               </Heading>
@@ -345,6 +343,45 @@ const Landpage = () => {
                 to the places youll love
               </Heading>
             </Box>
+
+            <Box display="flex"
+              bg="rgba(255, 255, 255, 0.3)"  // Warna putih dengan transparansi 60%
+              w="55%"
+              m="auto"
+              mt="5%"
+              h="25%"
+              p="10px"
+              borderRadius="100px"
+              justifyContent="center"
+              gap="75px"
+              alignItems="center"
+              boxShadow="xl"
+              flexWrap="wrap"
+              zIndex="999"
+              backdropFilter="blur(10px)"  // Efek blur untuk kaca
+              border="1px solid rgba(255, 255, 255, 0.2)"  // Memberikan kesan lebih glossy
+            >
+              {["Traveller served", "Destinations visited", "Tours organized", "Happy customers"].map((text, index) => (
+                <Box key={index}
+                  w="160px"
+                  h="160px"
+                  borderRadius="full"
+                  bg="white"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  boxShadow="lg"
+                  transition="transform 0.3s ease"
+                  _hover={{ transform: 'scale(1.05)', boxShadow: '2xl' }}
+                >
+                  <Box display="flex" flexDirection="column" textAlign="center" >
+                    <Heading fontSize="48px" fontWeight="bold" color="black">400</Heading>
+                    <Text fontSize="15px" fontWeight="medium">{text}</Text>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+
           </Box>
 
 
