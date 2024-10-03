@@ -88,7 +88,6 @@ func Login(c *gin.Context) {
         return
     }
 
-    // ambil data dari db
     foundUser, err := models.GetUserByEmail(loginUser.Email)
     if err != nil {
         fmt.Printf("Error fetching user: %v\n", err)

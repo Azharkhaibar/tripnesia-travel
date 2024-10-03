@@ -4,6 +4,7 @@ import { Navbar } from '../components/navbar'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { FaGlobe } from "react-icons/fa";
 import { EmailIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -13,9 +14,11 @@ import {
   Flex,
   Button,
   Card,
-  Input
+  Input,
+  Icon,
 } from '@chakra-ui/react'
 import NextLink from "next/link";
+import { SpotlightDestination } from '../data/spotlightlandpage';
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { dataDestinations } from '../data/metadata1'
 import { guider } from '../data/dataguider';
@@ -252,7 +255,51 @@ const Landpage = () => {
             </Box>
           </Box>
 
-
+          <Box w="100%"
+            h="80vh"
+            bg="blue"
+          >   
+            <Box textAlign="center" display="flex" flexDirection="column" alignItems="center" justifyContent="center"
+              pt="2%"
+            >
+              <Icon as={FaGlobe} boxSize="40px" color="teal.500" mb="0px" />
+              <Heading pt="1%">
+                Spotlight Destinations
+              </Heading>
+            </Box>
+              <Box w="100%" h="100%" display="flex"
+                justifyContent="center"
+                gap="25px"
+                pt="3%"
+              >
+                {SpotlightDestination.map((spotlight, index) => (
+                  <Box key={index}>
+                    <Box
+                      w="350px"
+                      h="460px"
+                      bgImage={`url(${spotlight.imgUrl})`}
+                      bgSize="cover"
+                      bgPosition="center"
+                      pos="relative"
+                      p="10px"
+                    >
+                      <Box
+                        pos="absolute"
+                      >
+                        <Text>{spotlight.namePlace}</Text>
+                      </Box>
+                      <Box pos="absolute"
+                        bottom="20px"
+                        display="flex"
+                      >
+                        <Text>{spotlight.available}</Text>
+                        <Text>Tours Available</Text>
+                      </Box>
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+          </Box>
 
           <Box pos="relative" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
           <Box w="100%" h="70vh" pt="8%" pos="relative" px='6%'>
@@ -303,7 +350,7 @@ const Landpage = () => {
 
           <Box
             w="100%"
-            h="80vh"
+            h="70vh"
             bgImage="url(/image/panorama/travelguider.png)"
             bgRepeat="no-repeat"
             bgSize="cover"
@@ -346,10 +393,10 @@ const Landpage = () => {
 
             <Box display="flex"
               bg="rgba(255, 255, 255, 0.3)"  
-              w="55%"
+              w="52%"
               m="auto"
               mt="5%"
-              h="25%"
+              h="26%"
               p="10px"
               borderRadius="100px"
               justifyContent="center"
@@ -363,8 +410,8 @@ const Landpage = () => {
             >
               {["Traveller served", "Destinations visited", "Tours organized", "Happy customers"].map((text, index) => (
                 <Box key={index}
-                  w="160px"
-                  h="160px"
+                  w="150px"
+                  h="150px"
                   borderRadius="full"
                   bg="white"
                   display="flex"
