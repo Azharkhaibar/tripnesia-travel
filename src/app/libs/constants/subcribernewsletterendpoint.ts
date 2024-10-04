@@ -1,0 +1,1 @@
+export const POST_NEWSLETTER_ENDPOINT = "http://localhost:8080/subcriber";

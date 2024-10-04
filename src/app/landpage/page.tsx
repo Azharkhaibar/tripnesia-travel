@@ -4,7 +4,7 @@ import { Navbar } from '../components/navbar'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { FaGlobe } from "react-icons/fa";
+import { FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
 import { EmailIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -18,6 +18,7 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import NextLink from "next/link";
+import { useNewsletterSubscription } from '../libs/hooks/fetchsubcriber';
 import { SpotlightDestination } from '../data/spotlightlandpage';
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { dataDestinations } from '../data/metadata1'
@@ -25,7 +26,7 @@ import { guider } from '../data/dataguider';
 import '../design/reactslider.css'
 import axios from 'axios';
 const Landpage = () => {
-  const [popularDestinations, setPopularDestinations] = useState([])
+  const { email, setEmail, loading, error, handleSubscribeNewsletter } = useNewsletterSubscription(); // Use the custom hook
   const commonSliderSettings = {
     dots: true,
     infinite: true,
@@ -50,16 +51,6 @@ const Landpage = () => {
     autoplaySpeed: 4000,
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/axios/fetch")
-      .then((response) => {
-        setPopularDestinations(response.data.data);
-      })
-      .catch((error) => {
-        console.error("terjadi error saat fetching data", error);
-      });
-  }, [])
   return (
     <Box maxW="100%" h="250vh">
       <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')"
@@ -140,7 +131,7 @@ const Landpage = () => {
             <Slider {...settings}>
               {dataDestinations.map((destination, index) => (
                 <Box key={index} h="520px">
-                  <Box maxW="410px" h="470px" borderRadius="md" boxShadow="md" overflow="hidden" display="flex" flexDirection="column" textAlign="left" mt="0" m="auto">
+                  <Box maxW="410px" h="470px" borderRadius="15px" boxShadow="md" overflow="hidden" display="flex" flexDirection="column" textAlign="left" mt="0" m="auto">
                     <Image src={destination.img} alt="foto-dummy" w="100%" h="auto" mt="0" />
                     <Box p="4">
                       <Heading size="md">{destination.destinasi}</Heading>
@@ -255,54 +246,123 @@ const Landpage = () => {
             </Box>
           </Box>
 
+          {/* SPOTLIGHT DESTINATION */}
+
           <Box w="100%"
-            h="80vh"
-            bg="blue"
-          >   
+            h="75vh"
+          >
             <Box textAlign="center" display="flex" flexDirection="column" alignItems="center" justifyContent="center"
-              pt="2%"
+              pt="3%"
             >
               <Icon as={FaGlobe} boxSize="40px" color="teal.500" mb="0px" />
               <Heading pt="1%">
                 Spotlight Destinations
               </Heading>
             </Box>
-              <Box w="100%" h="100%" display="flex"
-                justifyContent="center"
-                gap="25px"
-                pt="3%"
-              >
-                {SpotlightDestination.map((spotlight, index) => (
-                  <Box key={index}>
+            <Box w="100%" h="100%" display="flex"
+              justifyContent="center"
+              gap="22px"
+              pt="2%"
+            >
+              {SpotlightDestination.map((spotlight, index) => (
+                <Box key={index}>
+                  <Box
+                    w="350px"
+                    h="460px"
+                    bgImage={`url(${spotlight.imgUrl})`}
+                    bgSize="cover"
+                    bgPosition="center"
+                    pos="relative"
+                    borderRadius="15px"
+                    p="10px"
+                    cursor="pointer"
+                  >
                     <Box
-                      w="350px"
-                      h="460px"
-                      bgImage={`url(${spotlight.imgUrl})`}
-                      bgSize="cover"
-                      bgPosition="center"
-                      pos="relative"
-                      p="10px"
+                      pos="absolute"
+                      display="flex"
+                      w="190px"
+                      h="30px"
+                      justifyContent="center"
+                      alignItems="center"
+                      bg="white"
+                      borderRadius="15px"
+                      backdropFilter="blur(10px)"
+                      gap="8px"
+                      px="10px"
+                      textAlign="center"
                     >
-                      <Box
-                        pos="absolute"
-                      >
-                        <Text>{spotlight.namePlace}</Text>
-                      </Box>
-                      <Box pos="absolute"
-                        bottom="20px"
-                        display="flex"
-                      >
-                        <Text>{spotlight.available}</Text>
-                        <Text>Tours Available</Text>
-                      </Box>
+                      <Icon as={FaMapMarkerAlt} boxSize="20px" color="blue" />
+                      <Text>{spotlight.namePlace}</Text>
                     </Box>
+
+                    <Box pos="absolute" bottom="20px" display="flex" alignItems="center" gap="10px">
+                      <Text
+                        w="40px"
+                        h="40px"
+                        borderRadius="100px"
+                        bg="white"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        fontWeight="bold"
+                        boxShadow="md"
+                      >
+                        {spotlight.available}
+                      </Text>
+                      <Text color="white" fontWeight="600" fontSize="18px">Tours Available</Text>
+                    </Box>
+
                   </Box>
-                ))}
-              </Box>
+                </Box>
+              ))}
+            </Box>
           </Box>
 
+          {/* SEASON SALE */}
+          <Box w="100%" h="60vh" display="flex" justifyContent="center" alignItems="center">
+            <Box
+              w="88%"
+              h="100%"
+              pos="relative"
+              bgImage="url(/image/panorama/jekardah.png)"
+              bgRepeat="no-repeat"
+              bgSize="cover"
+              bgPosition="center"
+              borderRadius="20px"
+              p="10px"
+            >
+              <Box
+                w="40%"
+                h="auto"
+                bg="rgba(255, 255, 255, 0.8)"
+                borderRadius="15px"
+                pos="absolute"
+                top="20px"
+                left="20px"
+                backdropFilter="blur(20px)"
+                overflow="hidden"
+                p="20px"
+              >
+                <Heading fontSize="28px">Holiday Season Sale</Heading>
+                <Text pt="2%" fontSize="18px">ave 25% or more with Member Prices. Book by Oct 13 for travel before Mar 31.</Text>
+                <Text
+                  mt="2%"
+                  w="190px"
+                  h="35px"
+                  cursor="pointer"
+                  borderRadius="20px"
+                  bg="blue"
+                  p="6px"
+                  color="white"
+                  textAlign="center"
+                >Unlock Holidays Deals</Text>
+              </Box>
+            </Box>
+          </Box>
+
+
           <Box pos="relative" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
-          <Box w="100%" h="70vh" pt="8%" pos="relative" px='6%'>
+          <Box w="100%" h="70vh" pt="6%" pos="relative" px='6%'>
             <Box textAlign="center">
               <Text mb="0">
                 Meet With Guide
@@ -360,7 +420,7 @@ const Landpage = () => {
             <Box
               w="100%"
               h="100%"
-              
+
               pos="absolute"
               top="0"
               left="0"
@@ -371,7 +431,7 @@ const Landpage = () => {
               zIndex="2"
               textAlign="center"
               color="white"
-              
+
             >
               <Heading
                 fontSize={{ base: "24px", md: "52px" }}
@@ -392,7 +452,7 @@ const Landpage = () => {
             </Box>
 
             <Box display="flex"
-              bg="rgba(255, 255, 255, 0.3)"  
+              bg="rgba(255, 255, 255, 0.3)"
               w="52%"
               m="auto"
               mt="5%"
@@ -406,7 +466,7 @@ const Landpage = () => {
               flexWrap="wrap"
               zIndex="999"
               backdropFilter="blur(10px)"
-              border="1px solid rgba(255, 255, 255, 0.2)" 
+              border="1px solid rgba(255, 255, 255, 0.2)"
             >
               {["Traveller served", "Destinations visited", "Tours organized", "Happy customers"].map((text, index) => (
                 <Box key={index}
@@ -446,18 +506,27 @@ const Landpage = () => {
                     placeholder="Enter your email"
                     size="lg"
                     width="500px"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)} // Update email state
                     borderColor="blue.400"
                     borderRadius="25px"
                     _focus={{ borderColor: "blue.500" }}
                     mr={2}
                   />
-
-                  <Button colorScheme="blue" size="lg"
+                  <Button
+                    colorScheme="blue"
+                    size="lg"
                     borderRadius="25px"
+                    onClick={handleSubscribeNewsletter} // Call the subscription function
+                    isLoading={loading} // Show loading spinner when subscribing
+                    isDisabled={loading} // Disable the button while loading
                   >
                     Subscribe Now
                   </Button>
                 </Box>
+
+                {error && <Text color="red.500" mt={2}>{error}</Text>} {/* Display error message */}
+
                 <Text textAlign="center" color="gray.600" fontSize="sm">
                   Subscribe to our newsletters and promotions. Read our
                   <Text as="span" color="blue.500" textDecoration="underline"> Privacy Policy.</Text>
@@ -465,6 +534,7 @@ const Landpage = () => {
               </Flex>
             </Box>
           </Box>
+
           <Box w="100%" h="200vh">
             <Box></Box>
           </Box>

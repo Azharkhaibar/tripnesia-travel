@@ -39,15 +39,17 @@ func GetAllUsers() ([]UserAuth, error) {
     return userAuth, nil
 }
 
-// GetUserByEmail mengambil data user berdasarkan email
+// AMBIL EMAIL
 func GetUserByEmail(email string) (*UserAuth, error) {
     var user UserAuth
-    ExecuteQueryRow := "SELECT id, username, firstname, lastname, email, password FROM authusers WHERE email = ?"
-    err := config.DB.QueryRow(ExecuteQueryRow, email).Scan(&user.Id, &user.Username, &user.Firstname, &user.Lastname, &user.Email, &user.Password)
+    query := "SELECT id, username, firstname, lastname, email, password FROM authusers WHERE email = ?"
+    err := config.DB.QueryRow(query, email).Scan(&user.Id, &user.Username, &user.Firstname, &user.Lastname, &user.Email, &user.Password)
     if err != nil {
+        if err == sql.ErrNoRows {
+            return nil, errors.New("user not found")
+        }
         return nil, err
     }
-
     return &user, nil
 }
 
