@@ -49,7 +49,7 @@ const Register: React.FC = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:8080/auth/register",
+                "http://localhost:3001/auth/register",
                 registerForm,
                 {
                     headers: {

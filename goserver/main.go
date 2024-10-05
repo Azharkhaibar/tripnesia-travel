@@ -1,47 +1,37 @@
 package main
 
 import (
-    "goserver/config"
-    "goserver/routes"
-    "log"
-    "github.com/gin-gonic/gin"
+	"goserver/config"
+	"goserver/routes"
+	"log"
+	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
+	"time"
 )
 
-
-func CORSMiddleware() gin.HandlerFunc {
-    return func(c *gin.Context) {
-        c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-        c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
-        c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
-        if c.Request.Method == "OPTIONS" {
-            c.AbortWithStatus(204) 
-            return
-        }
-        c.Next()
-    }
-}
-
 func main() {
-    config.ConnectDB()
+	// Connect to the database
+	config.ConnectDB()
 
-    gin.SetMode(gin.ReleaseMode)
-    r := gin.Default()
+	// Set Gin to release mode
+	gin.SetMode(gin.ReleaseMode)
+	r := gin.Default()
 
-    // Gunakan middleware CORS kustom
-    r.Use(CORSMiddleware())
+	// CORS middleware setup
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"}, // Set the allowed frontend origin
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true, // Allow credentials (cookies, authorization headers)
+		MaxAge:           12 * time.Hour,
+	}))
 
-    // Log header respons untuk debugging
-    r.Use(func(c *gin.Context) {
-        c.Next()
-        log.Println("Response Headers:", c.Writer.Header())
-    })
+	// Setup routes
+	routes.SetupRoutes(r)
 
-    // Setup routes
-    routes.SetupAuthRoutes(r)
-    routes.SetupSubcriberRoute(r)
-
-    // Mulai server
-    if err := r.Run(":8080"); err != nil {
-        log.Fatal("Server failed to start:", err)
-    }
+	// Start the server
+	if err := r.Run(":3001"); err != nil {
+		log.Fatal("Server failed to start:", err)
+	}
 }

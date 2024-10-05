@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 	"strconv"
-
+    "log"
 	"goserver/models"
 
 	"github.com/gin-gonic/gin"
@@ -30,20 +30,28 @@ func GetSubscriberByEmail(c *gin.Context) {
 }
 
 func CreateSubscriber(c *gin.Context) {
-	var subscriber models.Newsletter
-	if err := c.ShouldBindJSON(&subscriber); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
-		return
-	}
+    log.Println("menerima data subcriber")
+    var subscriber models.Newsletter
+    // Bind JSON 
+    if err := c.ShouldBindJSON(&subscriber); err != nil {
+        log.Println("Error Binding:", err)
+        c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
+        return
+    }
 
-	err := models.CreateSubcriber(&subscriber)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create subscriber"})
-		return
-	}
+    log.Printf("data Subcriber: %+v\n", subscriber)
+    err := models.CreateSubcriber(&subscriber) // Pastikan ini sesuai dengan nama fungsi Anda
+    if err != nil {
+        log.Println("Error Membuat subscriber:", err)
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create subscriber"})
+        return
+    }
 
-	c.JSON(http.StatusCreated, gin.H{"message": "Subscriber created successfully"})
+    // Respons sukses
+    c.JSON(http.StatusCreated, gin.H{"message": "Subscriber created successfully"})
 }
+
+
 
 func DeleteSubscriber(c *gin.Context) {
 	idParam := c.Param("id")

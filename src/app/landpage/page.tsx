@@ -26,7 +26,53 @@ import { guider } from '../data/dataguider';
 import '../design/reactslider.css'
 import axios from 'axios';
 const Landpage = () => {
-  const { email, setEmail, loading, error, handleSubscribeNewsletter } = useNewsletterSubscription(); // Use the custom hook
+  const [emailForm, setEmailForm] = useState({ email: "" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setEmailForm({ email: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/subcriber/user",
+        emailForm,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true
+        }
+      );
+
+      console.log("Data successfully sent:", response.data);
+      alert("Successfully registered!");
+
+      // Reset form
+      setEmailForm({ email: "" });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+        alert(
+          `Failed to subscribe. Status ${status || "unknown"}. Please try again.`
+        );
+      } else {
+        alert("An unexpected error occurred. Please try again.");
+      }
+      setError("There was an error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
   const commonSliderSettings = {
     dots: true,
     infinite: true,
@@ -53,7 +99,7 @@ const Landpage = () => {
 
   return (
     <Box maxW="100%" h="250vh">
-      <Box px="0px" bgImage="url('/image/beautiful-girl-standing-viewpoint-koh-nangyuan-island-near-koh-tao-island-surat-thani-thailand.jpg')"
+      <Box px="0px" bgImage="url('/image/panorama/yunani.png')"
         h="95vh" bgSize="cover" bgRepeat="no-repeat"
       >
         <Navbar />
@@ -501,36 +547,41 @@ const Landpage = () => {
                 <Heading as="h2" size="xl" textAlign="center" mb={4}>
                   Travel inspiration delivered<br /> directly to your inbox
                 </Heading>
-                <Box display="flex" alignItems="center" justifyContent="center" mb={4}>
-                  <Input
-                    placeholder="Enter your email"
-                    size="lg"
-                    width="500px"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} // Update email state
-                    borderColor="blue.400"
-                    borderRadius="25px"
-                    _focus={{ borderColor: "blue.500" }}
-                    mr={2}
-                  />
-                  <Button
-                    colorScheme="blue"
-                    size="lg"
-                    borderRadius="25px"
-                    onClick={handleSubscribeNewsletter} // Call the subscription function
-                    isLoading={loading} // Show loading spinner when subscribing
-                    isDisabled={loading} // Disable the button while loading
-                  >
-                    Subscribe Now
-                  </Button>
-                </Box>
 
-                {error && <Text color="red.500" mt={2}>{error}</Text>} {/* Display error message */}
+                {/* Email Subscription Form */}
+                <form onSubmit={handleSubmit}>
+                  <Box display="flex" alignItems="center" justifyContent="center" mb={4}>
+                    <Input
+                      placeholder="Enter your email"
+                      size="lg"
+                      width="500px"
+                      value={emailForm.email}
+                      onChange={handleEmailChange} // Update email state
+                      borderColor="blue.400"
+                      borderRadius="25px"
+                      _focus={{ borderColor: "blue.500" }}
+                      mr={2}
+                      required // Make email input required
+                    />
+                    <Button
+                      colorScheme="blue"
+                      size="lg"
+                      borderRadius="25px"
+                      type="submit" // Ensure the button is a submit type
+                      isLoading={loading} // Show loading spinner when subscribing
+                      isDisabled={loading} // Disable the button while loading
+                    >
+                      Subscribe Now
+                    </Button>
+                  </Box>
 
-                <Text textAlign="center" color="gray.600" fontSize="sm">
-                  Subscribe to our newsletters and promotions. Read our
-                  <Text as="span" color="blue.500" textDecoration="underline"> Privacy Policy.</Text>
-                </Text>
+                  {error && <Text color="red.500" mt={2}>{error}</Text>} {/* Display error message */}
+
+                  <Text textAlign="center" color="gray.600" fontSize="sm">
+                    Subscribe to our newsletters and promotions. Read our
+                    <Text as="span" color="blue.500" textDecoration="underline"> Privacy Policy.</Text>
+                  </Text>
+                </form>
               </Flex>
             </Box>
           </Box>

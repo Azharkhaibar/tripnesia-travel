@@ -4,45 +4,36 @@ import React, { useState } from "react";
 import { Box, Heading, Text, Icon, Input, Select, Textarea, Button } from "@chakra-ui/react";
 import { MdLocationOn, MdPhone, MdEmail } from "react-icons/md";
 import { Banner } from "../components/banner";
-
+import { useContactForm } from "../libs/hooks/usecontactform";
+import { sendContactMessage } from "../libs/api/contactapi";
 const Contact = () => {
-  const [firstnameClient, setFirstNameClient] = useState('');
-  const [email, setEmail] = useState('');
-  const [typedestination, setTypeDestination] = useState('');
-  const [message, setMessage] = useState('');
+  const {
+    firstnameClient,
+    setFirstNameClient,
+    email,
+    setEmail,
+    typedestination,
+    setTypeDestination,
+    message,
+    setMessage,
+    resetForm,
+  } = useContactForm();
 
   const handleSubmitContact = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log('Sending data:', {
-        firstnameClient,
-        email,
-        typedestination,
-        message
-      });
+      console.log('Sending data:', { firstnameClient, email, typedestination, message });
 
-      const postResponse = await axios.post('http://localhost:4000/api/contact', {
-        firstname: firstnameClient,  // Ensure this matches the model field name
-        email,
-        typedestination,
-        message
-      });
+      const response = await sendContactMessage(firstnameClient, email, typedestination, message);
 
-      console.log('Data successfully sent:', postResponse.data);
+      console.log('Data successfully sent:', response);
       alert('Message sent successfully!');
-      setFirstNameClient('');
-      setEmail('');
-      setTypeDestination('');
-      setMessage('');
+      resetForm();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const status = error.response?.status;
         const data = error.response?.data;
-        console.error('Axios error occurred:', {
-          status,
-          data,
-          message: error.message
-        });
+        console.error('Axios error occurred:', { status, data, message: error.message });
         alert(`Failed to send message. Status: ${status}. Please try again.`);
       } else {
         console.error('Unexpected error occurred:', error);
@@ -128,16 +119,54 @@ const Contact = () => {
         w="100%"
         h="78vh"
       >
-        <Box pos="absolute" top="0" left="0" w="100%" h="100%" bg="black" opacity="0.4" zIndex="1"></Box>
-        <Box display="flex" alignItems="center" justifyContent="center" h="100%" zIndex="2" pos="relative">
-          {/* Left side content */}
-          <Box w="30%" color="white" textAlign="center" display="flex" alignItems="center" justifyContent="center">
+        {/* Overlay layer for the dark opacity effect */}
+        <Box
+          pos="absolute"
+          top="0"
+          left="0"
+          w="100%"
+          h="100%"
+          bg="black"
+          opacity="0.4"
+          zIndex="1"
+        ></Box>
+
+        {/* Centered content */}
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          h="100%"
+          zIndex="2"
+          pos="relative"
+        >
+          {/* Empty Box for possible future content or to balance layout */}
+          <Box
+            w="30%"
+            color="white"
+            textAlign="center"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
           </Box>
 
-          {/* Contact form */}
+          {/* Contact form container */}
           <Box w="50%" h="100%">
-            <Box maxW="545px" maxH="660px" bg="white" p={10} ml="7%" boxShadow="xl" borderRadius="lg" mt="11%" marginLeft="28%">
-              <Heading mb={6} textAlign="center" color="black">Book A Tour</Heading>
+            <Box
+              maxW="545px"
+              maxH="660px"
+              bg="white"
+              p={10}
+              ml="7%"
+              boxShadow="xl"
+              borderRadius="lg"
+              mt="11%"
+              marginLeft="28%"
+            >
+              <Heading mb={6} textAlign="center" color="black">
+                Book A Tour
+              </Heading>
               <form onSubmit={handleSubmitContact}>
                 {/* First Name */}
                 <Box mb={5}>
@@ -148,6 +177,7 @@ const Contact = () => {
                     fontSize="md"
                     value={firstnameClient}
                     onChange={(e) => setFirstNameClient(e.target.value)}
+                    isRequired
                   />
                 </Box>
 
@@ -161,8 +191,11 @@ const Contact = () => {
                     fontSize="md"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    isRequired
                   />
                 </Box>
+
+                {/* Destination */}
                 <Box mb={5}>
                   <Select
                     placeholder="Select your destination"
@@ -175,6 +208,7 @@ const Contact = () => {
                     borderRadius="md"
                     value={typedestination}
                     onChange={(e) => setTypeDestination(e.target.value)}
+                    isRequired
                   >
                     <option value="Jawa">Jawa</option>
                     <option value="Sulawesi">Sulawesi</option>
@@ -186,6 +220,8 @@ const Contact = () => {
                     <option value="Maluku">Maluku</option>
                   </Select>
                 </Box>
+
+                {/* Message */}
                 <Box mb={6}>
                   <Textarea
                     placeholder="Enter your message"
@@ -195,8 +231,11 @@ const Contact = () => {
                     h="120px"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    isRequired
                   />
                 </Box>
+
+                {/* Submit Button */}
                 <Button
                   w="100%"
                   colorScheme="blue"
