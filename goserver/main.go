@@ -29,6 +29,7 @@ func main() {
 
 	// Setup routes
 	routes.SetupRoutes(r)
+	routes.SetupPaketRoutes(r)
 
 	// Start the server
 	if err := r.Run(":3001"); err != nil {

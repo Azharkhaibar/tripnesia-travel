@@ -5,8 +5,6 @@ export const useNewsletterSubscription = () => {
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false); 
   const [error, setError] = useState<string | null>(null); 
-
-
   const validateEmail = (email: string): boolean => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
     return emailPattern.test(email); 
@@ -14,32 +12,30 @@ export const useNewsletterSubscription = () => {
 
   const handleSubscribeNewsletter = async () => {
     setError(null); 
-
-    // Check if email is valid
     if (!email) {
       setError("Please enter a valid email address.");
-      return; // Exit the function if the email is empty
+      return; 
     }
 
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
-      return; // Exit if the email format is invalid
+      return;
     }
 
-    setLoading(true); // Set loading state to true
+    setLoading(true); 
 
     try {
-      await SubriberNewsletter(email); // Attempt to subscribe
-      alert("Successfully subscribed to the newsletter!"); // Alert success
+      await SubriberNewsletter(email); 
+      alert("Successfully subscribed to the newsletter!"); 
     } catch (err) {
       console.error("Subscription failed:", err);
       if (err instanceof Error) {
-        setError(err.message); // Set specific error message from the server response
+        setError(err.message); 
       } else {
-        setError("An unexpected error occurred. Please try again."); // General error message
+        setError("An unexpected error occurred. Please try again."); 
       }
     } finally {
-      setLoading(false); // Set loading state to false
+      setLoading(false); 
     }
   };
 

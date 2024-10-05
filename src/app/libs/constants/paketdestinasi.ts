@@ -1,0 +1,1 @@
+export const ENDPOINT_PAKET_DESTINASI = "http://localhost:4001/api/paketdestinasi";
