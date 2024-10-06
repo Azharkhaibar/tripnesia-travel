@@ -7,6 +7,7 @@ const bookingController = require('../controllers/bookingcontroller')
 const axiosController = require('../controllers/axioscontroller')
 const ContactController = require('../controllers/contactcontroller')
 const PackageDestination = require('../controllers/packagedestinationscontroller')
+const PricingController = require ('../controllers/pricingcontroller.js')
 router.get('/', (req, res) => {
     res.json({
         message: 'STATUS CONNECTED'
@@ -35,5 +36,10 @@ router.get('/contact', ContactController.getContact)
 
 router.get("/paketdestinasi", PackageDestination.getAllPaketDestinasi);
 router.get("/paketdestinasi/:id", PackageDestination.getPaketDestinasiById)
+
+router.get('/pricing', PricingController.FetchingDataPricing)
+router.get("/pricing/:id", PricingController.FetchPricingDataById);
+router.delete("/pricing/:id", PricingController.DeletePricingData);
+router.post("/pricing", PricingController.CreatePricingData);
 
 module.exports = router
