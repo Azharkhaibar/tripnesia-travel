@@ -13,12 +13,12 @@ export const useNewsletterSubscription = () => {
   const handleSubscribeNewsletter = async () => {
     setError(null); 
     if (!email) {
-      setError("Please enter a valid email address.");
+      setError("Input Email yg VALID masbro!");
       return; 
     }
 
     if (!validateEmail(email)) {
-      setError("Please enter a valid email address.");
+      setError("Input Email yg VALID masbro!");
       return;
     }
 

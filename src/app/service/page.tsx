@@ -1,13 +1,17 @@
+// BELUM SELESAIIIIIIII
+
+
+
 "use client";
 import React, { useState } from "react";
-import { Box, Text, Image, Heading, Flex, Badge, Button, Icon } from "@chakra-ui/react";
+import { Box, Text, Image, Heading, VStack, Flex, Badge, Button, Icon } from "@chakra-ui/react";
 import { Navbar } from "../components/navbar";
 import { HooksPaketDestinasi } from "../libs/hooks/fetchpaketdestinasi";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Menggunakan ikon untuk tombol
-
+import { HooksPricingPlans } from "../libs/hooks/pricinghandlefetch";
 const Service = () => {
-  const { paketDestinasi, error } = HooksPaketDestinasi();
-
+  const { paketDestinasi, error: paketError } = HooksPaketDestinasi();
+  const { PricingPlans, error: PricingError } = HooksPricingPlans();
   const itemsPerPage = 4;
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -18,15 +22,15 @@ const Service = () => {
     setCurrentIndex((prev) => Math.min(prev + itemsPerPage, paketDestinasi.length - itemsPerPage));
   };
 
-  if (error) {
+  if (paketError || PricingError) {
     return (
       <Text color="red" textAlign="center" mt="50px">
-        Failed to load data: {error}
+        Failed to load data: {paketError || PricingError}
       </Text>
     );
   }
 
-  if (!paketDestinasi.length) {
+  if (!paketDestinasi.length || !PricingPlans) {
     return (
       <Text textAlign="center" mt="50px">
         Loading...
@@ -162,10 +166,49 @@ const Service = () => {
 
       <Box w="100%" h="100vh">
         <Box textAlign="center">
-          <Text>Lets Checkin</Text>
-          <Heading>Affordable Pricing plans</Heading>
+          <Text>Let's Check In</Text>
+          <Heading>Affordable Pricing Plans</Heading>
         </Box>
+
+        <Flex justify="center">
+          {Array.isArray(PricingPlans) && PricingPlans.length > 0 ? ( 
+            PricingPlans.map((plan) => (
+              <Box key={plan.id}>
+                <Box
+                  w="350px"
+                  h="auto"
+                  p="15px"
+                  borderRadius="md"
+                  overflow="hidden"
+                >
+                  <Box display="flex">
+                    <Heading>{plan.kategori_pricing}</Heading>
+                  </Box>
+                  <Box>
+                    <Heading fontSize="24px" fontWeight="600">
+                      Rp.{plan.harga_pricing}
+                      <span style={{ fontWeight: "500", opacity: "0.5", fontSize: "18px" }}>
+                        /Per Night
+                      </span>
+                    </Heading>
+                    <Text>{plan.deskripsi}</Text>
+                    <VStack spacing={2} align="start">
+                      {plan.benefit.map((benefit, index) => (
+                        <Text key={index} fontSize="sm">
+                          • {benefit}
+                        </Text>
+                      ))}
+                    </VStack>
+                  </Box>
+                </Box>
+              </Box>
+            ))
+          ) : (
+            <Text>No pricing plans available.</Text> // Message for empty or non-array PricingPlans
+          )}
+        </Flex>
       </Box>
+
     </Box>
   );
 };

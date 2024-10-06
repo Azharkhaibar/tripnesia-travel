@@ -59,3 +59,5 @@ const [firstnameClient, setFirstNameClient] = useState('');
       }
     }
   };
+
+  mysqld --console --skip-grant-tables --skip-external-locking
