@@ -4,7 +4,12 @@ import { Navbar } from '../components/navbar'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
+import { FaGlobe, FaMapMarkerAlt, FaMapMarked,
+   FaLanguage,
+   FaComment,
+   FaGuilded,
+   FaComments
+  } from "react-icons/fa";
 import { EmailIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -99,7 +104,7 @@ const Landpage = () => {
 
   return (
     <Box maxW="100%" h="250vh">
-      <Box px="0px" bgImage="url('/image/panorama/yunani.png')"
+      <Box px="0px" bgImage="url('/image/panorama/ntt.png')"
         h="95vh" bgSize="cover" bgRepeat="no-repeat"
       >
         <Navbar />
@@ -408,8 +413,9 @@ const Landpage = () => {
 
 
           <Box pos="relative" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
-          <Box w="100%" h="70vh" pt="6%" pos="relative" px='6%'>
+          <Box w="100%" h="75vh" pt="6%" pos="relative" px="6%">
             <Box textAlign="center">
+              <Icon as={FaGuilded} boxSize="40px" color="teal.500" mb="0px" />
               <Text mb="0">
                 Meet With Guide
                 <Heading mt="0" fontSize="38px">
@@ -420,39 +426,79 @@ const Landpage = () => {
             <Box w="100%" h="100%" zIndex="1" mt="50px">
               <Slider {...sliderGuider}>
                 {guider.map((guiderPerson, index) => (
-                  <Box key={index} pos="relative" textAlign="center" pb="50px" zIndex="10">
-                    <Image
-                      src={guiderPerson.pictPerson}
-                      w="150px"
-                      h="150px"
-                      borderRadius="50%"
-                      objectFit="cover"
-                      position="absolute"
-                      top="0"
-                      left="50%"
-                      transform="translate(-50%, -30%)"
-                      border="3px solid grey"
-                      boxShadow="0 0 10px rgba(0, 0, 0, 0.1)"
-                      zIndex="100"
-                      alt="gambar-dummy"
-                    />
-                    <Card maxW="400px" h="300px" bg="white" pt="100px" zIndex="0" borderRadius="20px" boxShadow="lg" p="15px">
-                      <Box p="40px" bg="pink" borderRadius="20px" mt="41%">
-                        <Box textAlign="center" h="100%">
-                          <Heading mb="0" size="md">
-                            {guiderPerson.name}
-                          </Heading>
-                          <Text fontSize="18px" fontWeight="400" mt="0">
-                            {guiderPerson.job}
-                          </Text>
+                  <Box
+                    key={index}
+                    pos="relative"
+                    textAlign="center"
+                    pb="50px"
+                    zIndex="10"
+                    overflow="visible"
+                    w="400px"
+                    h="350px"
+                  >
+                    <Box h="70vh">
+                      <Image
+                        src={guiderPerson.pictPerson}
+                        w="100%"
+                        h="auto"
+                        objectFit="cover"
+                        position="absolute"
+                        top="0"
+                        left="50%"
+                        transform="translate(-50%, -30%)"
+                        border="3px solid grey"
+                        boxShadow="0 0 10px rgba(0, 0, 0, 0.1)"
+                        zIndex="100"
+                        alt="gambar-dummy"
+                      />
+                      <Card
+                        maxW="400px"
+                        h="auto"
+                        bg="white"
+                        pt="100px"
+                        zIndex="0"
+                        borderRadius="20px"
+                        boxShadow="lg"
+                        p="15px"
+                      >
+                        <Box p="5px" mt="41%">
+                          <Box textAlign="left" h="100%">
+                            <Heading mb="0" size="md">
+                              {guiderPerson.name}
+                            </Heading>
+                            <Box display="flex" alignItems="center" gap="3%" opacity="0.5">
+                              <Icon as={FaMapMarked} />
+                              <Text>{guiderPerson.guider_place}</Text>
+                            </Box>
+                            <Box display="flex" alignItems="center" gap="3%">
+                              <Icon as={FaLanguage} />
+                              <Text fontSize="18px" fontWeight="400" mt="0">
+                                {guiderPerson.language}
+                              </Text>
+                            </Box>
+                            <Box display="flex" alignItems="center" gap="3%">
+                              <Text
+                                textAlign="center"
+                                p="5px"
+                                borderRadius="20px"
+                                bg="transparent"
+                                border="2px solid black"
+                                w="400px"
+                              >
+                                <Icon as={FaComment} />
+                                Message
+                              </Text>
+                            </Box>
+                          </Box>
                         </Box>
-                      </Box>
-                    </Card>
+                      </Card>
+                    </Box>
                   </Box>
                 ))}
               </Slider>
             </Box>
           </Box>
+
 
           <Box
             w="100%"
@@ -534,7 +580,13 @@ const Landpage = () => {
                 </Box>
               ))}
             </Box>
+          </Box>
 
+          <Box w="100%" h="80vh">
+            <Box textAlign="center" pt="3%">
+              <Icon as={FaComments} boxSize="40px" color="teal.500" mb="0px" />
+              <Heading>What travellers say</Heading>
+            </Box>
           </Box>
 
 

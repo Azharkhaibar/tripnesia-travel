@@ -3,10 +3,8 @@ const PaketDestinasiModels = require("../models/packagedestinationmodels");
 const getAllPaketDestinasi = async (req, res) => {
   try {
     const paketDestinasi = await PaketDestinasiModels.findAll();
-
-    // Convert image BLOB to base64 string
     const formattedPaketDestinasi = paketDestinasi.map((paket) => ({
-      ...paket.toJSON(), // Convert to plain object
+      ...paket.toJSON(), 
       img: paket.img ? paket.img.toString("base64") : null, // Convert to base64
     }));
 
