@@ -1,0 +1,1 @@
+export const HIGH_RATING_REVIEWS = "http://localhost:4001/api/reviewshighrating";

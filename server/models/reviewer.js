@@ -1,32 +1,35 @@
-const { type } = require('os')
-const db = require('../config/db')
-const sequelize = require('sequelize')
+const db = require("../config/db");
+const sequelize = require("sequelize");
 
-const ReviewsModels = db.define('reviews', {
-    id: {
-        type: sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
+const ReviewsModels = db.define(
+    "reviews",
+    {
+        id: {
+            type: sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+        },
+        review_text: {
+            type: sequelize.TEXT,
+            allowNull: false,
+        },
+        rating: {
+            type: sequelize.ENUM("1", "2", "3", "4", "5"), // Rating sebagai ENUM
+            allowNull: false,
+        },
+        name_reviewer: {
+            type: sequelize.STRING,
+            allowNull: false,
+        },
+        location_traveller: {
+            type: sequelize.STRING,
+            allowNull: false,
+        },
     },
-    review_text: {
-        type: sequelize.TEXT,
-        allowNull: false
-    },
-    rating: {
-        type: sequelize.INTEGER,
-        allowNull: false
-    }, 
-    name_reviewer: {
-        type: sequelize.STRING,
-        allowNull: false
-    },
-    location_traveller: {
-        type: sequelize.STRING,
-        allowNull: false
-    },
-}, {
-    tablename: "reviews",
-    timestamp: false
-})
+    {
+        tableName: "reviews",
+        timestamps: false,
+    }
+);
 
-exports.module = ReviewsModels;
+module.exports = ReviewsModels; 

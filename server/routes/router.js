@@ -8,6 +8,7 @@ const axiosController = require('../controllers/axioscontroller')
 const ContactController = require('../controllers/contactcontroller')
 const PackageDestination = require('../controllers/packagedestinationscontroller')
 const PricingController = require ('../controllers/pricingcontroller.js')
+const ReviewsController = require('../controllers/reviewscontroller')
 router.get('/', (req, res) => {
     res.json({
         message: 'STATUS CONNECTED'
@@ -37,9 +38,18 @@ router.get('/contact', ContactController.getContact)
 router.get("/paketdestinasi", PackageDestination.getAllPaketDestinasi);
 router.get("/paketdestinasi/:id", PackageDestination.getPaketDestinasiById)
 
+// PRICING
 router.get('/pricing', PricingController.FetchingDataPricing)
 router.get("/pricing/:id", PricingController.FetchPricingDataById);
 router.delete("/pricing/:id", PricingController.DeletePricingData);
 router.post("/pricing", PricingController.CreatePricingData);
+
+// REVIEWS 
+router.get('/reviews', ReviewsController.GetAllReviews)
+router.get('/reviews/:id', ReviewsController.GetIdReviews)
+router.get('/reviewshighrating', ReviewsController.GetHighReviewsRating)
+router.delete('/reviews:/id', ReviewsController.DeleteReviewsById)
+
+
 
 module.exports = router
