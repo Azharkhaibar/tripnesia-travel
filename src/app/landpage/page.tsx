@@ -23,6 +23,7 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import NextLink from "next/link";
+import ReviewsComponent from '../components/reviews';
 import { useNewsletterSubscription } from '../libs/hooks/fetchsubcriber';
 import { SpotlightDestination } from '../data/spotlightlandpage';
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
@@ -34,7 +35,6 @@ const Landpage = () => {
   const [emailForm, setEmailForm] = useState({ email: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setEmailForm({ email: value });
@@ -413,7 +413,7 @@ const Landpage = () => {
 
 
           <Box pos="relative" w="100%" h="50%" bg="grey" right="0" top="1985"></Box>
-          <Box w="100%" h="75vh" pt="6%" pos="relative" px="6%">
+          <Box w="100%" h="75vh" pt="3%" pos="relative" px="6%">
             <Box textAlign="center">
               <Icon as={FaGuilded} boxSize="40px" color="teal.500" mb="0px" />
               <Text mb="0">
@@ -434,6 +434,8 @@ const Landpage = () => {
                     zIndex="10"
                     overflow="visible"
                     w="400px"
+                    pt="3%"
+                    mt="8%"
                     h="350px"
                   >
                     <Box h="70vh">
@@ -445,6 +447,7 @@ const Landpage = () => {
                         position="absolute"
                         top="0"
                         left="50%"
+                        borderRadius="20px"
                         transform="translate(-50%, -30%)"
                         border="3px solid grey"
                         boxShadow="0 0 10px rgba(0, 0, 0, 0.1)"
@@ -582,12 +585,7 @@ const Landpage = () => {
             </Box>
           </Box>
 
-          <Box w="100%" h="80vh">
-            <Box textAlign="center" pt="3%">
-              <Icon as={FaComments} boxSize="40px" color="teal.500" mb="0px" />
-              <Heading>What travellers say</Heading>
-            </Box>
-          </Box>
+          <ReviewsComponent />
 
 
           <Box w="100%" h="40vh" bg="blue.100" p={5} borderRadius="md">

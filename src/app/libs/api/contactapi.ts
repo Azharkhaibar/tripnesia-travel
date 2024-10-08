@@ -18,13 +18,13 @@ export const sendContactMessage = async (firstname: string, email: string, typed
 
 export const fetchPricingPlans = async (): Promise<PricingPlanInterface[]> => {
   try {
-    const startTime = Date.now(); // Start time
-    const response = await axios.get<PricingPlanInterface[]>(PRICING_PLAN_ENDPOINT);
-    const duration = Date.now() - startTime; // Duration
-    console.log(`Fetch time: ${duration}ms`); // Log fetch time
-    return response.data;
+    const response = await axios.get<{ message: string; data: PricingPlanInterface[] }>(PRICING_PLAN_ENDPOINT);
+    console.log("API Response:", response); 
+    return response.data.data; 
   } catch (error) {
     console.error("Error fetching pricing plans:", error);
     throw error;
   }
 };
+
+

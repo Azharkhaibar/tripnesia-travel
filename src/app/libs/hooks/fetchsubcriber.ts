@@ -44,6 +44,6 @@ export const useNewsletterSubscription = () => {
     setEmail,
     loading,
     error,
-    handleSubscribeNewsletter, // Ensure consistent naming
+    handleSubscribeNewsletter, 
   };
 };
