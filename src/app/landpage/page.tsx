@@ -4,6 +4,7 @@ import { Navbar } from '../components/navbar'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import StarRating from '../libs/utils/starrating';
 import { FaGlobe, FaMapMarkerAlt, FaMapMarked,
    FaLanguage,
    FaComment,
@@ -625,7 +626,7 @@ const Landpage = () => {
                     </Button>
                   </Box>
 
-                  {error && <Text color="red.500" mt={2}>{error}</Text>} {/* Display error message */}
+                  {error && <Text color="red.500" mt={2}>{error}</Text>} 
 
                   <Text textAlign="center" color="gray.600" fontSize="sm">
                     Subscribe to our newsletters and promotions. Read our
