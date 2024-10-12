@@ -9,6 +9,7 @@ const ContactController = require('../controllers/contactcontroller')
 const PackageDestination = require('../controllers/packagedestinationscontroller')
 const PricingController = require ('../controllers/pricingcontroller.js')
 const ReviewsController = require('../controllers/reviewscontroller')
+const GuiderController = require('../controllers/allguidercontroller')
 router.get('/', (req, res) => {
     res.json({
         message: 'STATUS CONNECTED'
@@ -50,6 +51,10 @@ router.get('/reviews/:id', ReviewsController.GetIdReviews)
 router.get('/reviewshighrating', ReviewsController.GetHighReviewsRating)
 router.delete('/reviews:/id', ReviewsController.DeleteReviewsById)
 
-
+// guider 
+router.get('/guider', GuiderController.GetAllGuiderData)
+router.get('/guider/:id', GuiderController.GetGuiderDataById)
+router.get('/fewguider/:id', GuiderController.GetFewGuiderData)
+router.delete('/guider/:id', GuiderController.DeleteIdGuider)
 
 module.exports = router
