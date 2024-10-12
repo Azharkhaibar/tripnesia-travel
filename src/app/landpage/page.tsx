@@ -24,6 +24,8 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import NextLink from "next/link";
+import CounterTime from '../libs/utils/counter';
+import { TIMELINE_DATA_CUSTOMER } from '../data/statisticdata';
 import ReviewsComponent from '../components/reviews';
 import { useNewsletterSubscription } from '../libs/hooks/fetchsubcriber';
 import { SpotlightDestination } from '../data/spotlightlandpage';
@@ -439,7 +441,7 @@ const Landpage = () => {
                     mt="8%"
                     h="350px"
                   >
-                    <Box h="70vh">
+                    <Box h="65vh">
                       <Image
                         src={guiderPerson.pictPerson}
                         w="100%"
@@ -480,7 +482,7 @@ const Landpage = () => {
                                 {guiderPerson.language}
                               </Text>
                             </Box>
-                            <Box display="flex" alignItems="center" gap="3%">
+                            <Box display="flex" alignItems="center" gap="4%" pt="3%">
                               <Text
                                 textAlign="center"
                                 p="5px"
@@ -578,7 +580,7 @@ const Landpage = () => {
                   _hover={{ transform: 'scale(1.05)', boxShadow: '2xl' }}
                 >
                   <Box display="flex" flexDirection="column" textAlign="center" >
-                    <Heading fontSize="48px" fontWeight="bold" color="black">400</Heading>
+                    <CounterTime targetCount={Object.values(TIMELINE_DATA_CUSTOMER[index])[0]} />
                     <Text fontSize="15px" fontWeight="medium">{text}</Text>
                   </Box>
                 </Box>
